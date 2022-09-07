@@ -6,6 +6,8 @@ namespace HW1_JoshuaLong
 
     //test
     //55 22 77 88 11 22 44 77 55 99 22
+
+    //this will call the main program
     class Program
     {
         static void Main(string[] args)
@@ -13,6 +15,7 @@ namespace HW1_JoshuaLong
             Console.WriteLine("Hello World!");
             int option = 1;
             BST tree = new BST();
+            //exit program if option not 1 anymore
             while (option == 1)
             {
                 Console.WriteLine("Enter a number to insert into the tree(No spaces at end): ");

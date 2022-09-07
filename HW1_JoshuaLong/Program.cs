@@ -197,6 +197,8 @@ namespace HW1_JoshuaLong
         //}
 
     }
+    //test
+    //55 22 77 88 11 22 44 77 55 99 22
     class Program
     {
         static void Main(string[] args)
@@ -206,9 +208,18 @@ namespace HW1_JoshuaLong
             BST tree = new BST();
             while (option == 1)
             {
-                Console.WriteLine("Enter a number to insert into the tree: ");
-                int num = Convert.ToInt32(Console.ReadLine());
-                tree.insert(num);
+                Console.WriteLine("Enter a number to insert into the tree(No spaces at end): ");
+                
+
+
+                string str = Console.ReadLine();
+                Console.WriteLine("");
+                var result = str.Split(' ');
+                foreach(var s in result)
+                {
+                    tree.insert(Convert.ToInt32(s));
+                }
+                
                 tree.inorder();
                 tree.print_num_of_nodes();
                 tree.print_num_of_leaves();
@@ -218,6 +229,7 @@ namespace HW1_JoshuaLong
                 Console.WriteLine("Enter 1 to continue or 0 to exit: ");
                 option = Convert.ToInt32(Console.ReadLine());
             }
+            
             //BST obj1 = new BST();
             //obj1.insert(55);
             //obj1.insert(22);

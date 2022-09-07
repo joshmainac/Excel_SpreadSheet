@@ -202,24 +202,40 @@ namespace HW1_JoshuaLong
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            BST obj1 = new BST();
-            obj1.insert(55);
-            obj1.insert(22);
-            obj1.insert(77);
-            obj1.insert(88);
-            obj1.insert(11);
-            obj1.insert(22);
-            obj1.insert(44);
-            obj1.insert(77);
-            obj1.insert(55);
-            obj1.insert(99);
-            obj1.insert(22);
-            obj1.inorder();
-            obj1.print_num_of_nodes();
-            obj1.print_num_of_leaves();
-            obj1.print_num_of_full_nodes();
-            obj1.print_num_of_levels();
-            obj1.print_min_num_of_levels();
+            int option = 1;
+            BST tree = new BST();
+            while (option == 1)
+            {
+                Console.WriteLine("Enter a number to insert into the tree: ");
+                int num = Convert.ToInt32(Console.ReadLine());
+                tree.insert(num);
+                tree.inorder();
+                tree.print_num_of_nodes();
+                tree.print_num_of_leaves();
+                tree.print_num_of_full_nodes();
+                tree.print_num_of_levels();
+                tree.print_min_num_of_levels();
+                Console.WriteLine("Enter 1 to continue or 0 to exit: ");
+                option = Convert.ToInt32(Console.ReadLine());
+            }
+            //BST obj1 = new BST();
+            //obj1.insert(55);
+            //obj1.insert(22);
+            //obj1.insert(77);
+            //obj1.insert(88);
+            //obj1.insert(11);
+            //obj1.insert(22);
+            //obj1.insert(44);
+            //obj1.insert(77);
+            //obj1.insert(55);
+            //obj1.insert(99);
+            //obj1.insert(22);
+            //obj1.inorder();
+            //obj1.print_num_of_nodes();
+            //obj1.print_num_of_leaves();
+            //obj1.print_num_of_full_nodes();
+            //obj1.print_num_of_levels();
+            //obj1.print_min_num_of_levels();
         }
     }
 }

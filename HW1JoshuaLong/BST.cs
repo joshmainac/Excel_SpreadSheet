@@ -5,7 +5,7 @@ using System.Text;
 namespace HW1JoshuaLong
 {
     //I include class Node into the BST class because they are related and Node is only used in BST
-    class Node
+    public class Node
     {
         //store int as data
         public int Data;
@@ -23,7 +23,7 @@ namespace HW1JoshuaLong
     }
 
     //class for Binary search tree
-    class BST
+    public class BST
     {
         //the root node for BST
         public Node Root;

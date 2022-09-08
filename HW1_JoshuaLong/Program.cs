@@ -27,13 +27,13 @@ namespace HW1_JoshuaLong
                 var result = str.Split(' ');
                 foreach(var s in result)
                 {
-                    tree.insert(Convert.ToInt32(s));
+                    tree.Insert(Convert.ToInt32(s));
                 }
                 
-                tree.inorder();
-                tree.print_num_of_nodes();
-                tree.print_num_of_levels();
-                tree.print_min_num_of_levels();
+                tree.Inorder();
+                tree.PrintNumOfNodes();
+                tree.PrintNumOfLevels();
+                tree.PrintMinNumOfLevels();
                 //tree.print_num_of_leaves();
                 //tree.print_num_of_full_nodes();
                

@@ -8,17 +8,17 @@ namespace HW1_JoshuaLong
     class Node
     {
         //store int as data
-        public int data;
+        public int Data;
         //store left node
-        public Node left;
+        public Node Left;
         //store right node
-        public Node right;
+        public Node Right;
         //constructor for Node
         public Node(int data)
         {
-            this.data = data;
-            left = null;
-            right = null;
+            this.Data = data;
+            Left = null;
+            Right = null;
         }
     }
 
@@ -26,21 +26,21 @@ namespace HW1_JoshuaLong
     class BST
     {
         //the root node for BST
-        public Node root;
+        public Node Root;
 
         //constructor for BST
         public BST()
         {
-            root = null;
+            Root = null;
         }
 
         //Add an element to the BST by not violating the BST properties.
-        public void insert(int data)
+        public void Insert(int data)
         {
-            root = insert(root, data);
+            Root = Insert(Root, data);
         }
         //this will be called recursively 
-        public Node insert(Node root, int data)
+        public Node Insert(Node root, int data)
         {
 
 
@@ -52,14 +52,14 @@ namespace HW1_JoshuaLong
             else
             {
                 //insert to left if data is smaller than root
-                if (data < root.data)
+                if (data < root.Data)
                 {
-                    root.left = insert(root.left, data);
+                    root.Left = Insert(root.Left, data);
                 }
                 //insert to right if data is bigger than rott
-                else if (data > root.data)
+                else if (data > root.Data)
                 {
-                    root.right = insert(root.right, data);
+                    root.Right = Insert(root.Right, data);
                 }
                 //pass if equal because BSS have no duplicate
                 else
@@ -73,28 +73,28 @@ namespace HW1_JoshuaLong
         }
 
         //Display the numbers in sorted order (smallest first, largest last). 
-        public void inorder()
+        public void Inorder()
         {
-            inorder(root);
+            Inorder(Root);
         }
 
         ////this will be called recursively 
-        public void inorder(Node root)
+        public void Inorder(Node root)
         {
             if (root != null)
             {
-                inorder(root.left);
-                Console.WriteLine(root.data);
-                inorder(root.right);
+                Inorder(root.Left);
+                Console.WriteLine(root.Data);
+                Inorder(root.Right);
             }
         }
         //Number of items
-        public void print_num_of_nodes()
+        public void PrintNumOfNodes()
         {
-            Console.WriteLine("Number of nodes: " + num_of_nodes(root));
+            Console.WriteLine("Number of nodes: " + NumOfNodes(Root));
         }
         //this will be called recursively 
-        public int num_of_nodes(Node root)
+        public int NumOfNodes(Node root)
         {
             if (root == null)
             {
@@ -102,17 +102,17 @@ namespace HW1_JoshuaLong
             }
             else
             {
-                return 1 + num_of_nodes(root.left) + num_of_nodes(root.right);
+                return 1 + NumOfNodes(root.Left) + NumOfNodes(root.Right);
             }
         }
 
         //number of levels in tree
-        public void print_num_of_levels()
+        public void PrintNumOfLevels()
         {
-            Console.WriteLine("Number of levels: " + num_of_levels(root));
+            Console.WriteLine("Number of levels: " + NumOfLevels(Root));
         }
         ////this will be called recursively 
-        public int num_of_levels(Node root)
+        public int NumOfLevels(Node root)
         {
             if (root == null)
             {
@@ -120,8 +120,8 @@ namespace HW1_JoshuaLong
             }
             else
             {
-                int left = num_of_levels(root.left);
-                int right = num_of_levels(root.right);
+                int left = NumOfLevels(root.Left);
+                int right = NumOfLevels(root.Right);
 
                 if (left > right)
                 {
@@ -134,14 +134,14 @@ namespace HW1_JoshuaLong
             }
         }
         //Theoretical minimum number of levels that the tree could have given the number of  nodes it contains
-        public void print_min_num_of_levels()
+        public void PrintMinNumOfLevels()
         {
-            Console.WriteLine("Minimum number of levels: " + min_num_of_levels(root));
+            Console.WriteLine("Minimum number of levels: " + MinNumOfLevels(Root));
         }
         ////this will be called recursively 
-        public int min_num_of_levels(Node root)
+        public int MinNumOfLevels(Node root)
         {
-            int n = num_of_nodes(root);
+            int n = NumOfNodes(root);
             int min = (int)Math.Log(n + 1, 2);
             return min;
         }
@@ -149,47 +149,47 @@ namespace HW1_JoshuaLong
         //leaves not levels
         //this is not requied for HW1 but I add this for practice
         //Number of leaves in the tree
-        public void print_num_of_leaves()
+        public void PrintNumOfLeaves()
         {
-            Console.WriteLine("Number of leaves: " + num_of_leaves(root));
+            Console.WriteLine("Number of leaves: " + NumOfLeaves(Root));
         }
         ////this will be called recursively 
-        public int num_of_leaves(Node root)
+        public int NumOfLeaves(Node root)
         {
             if (root == null)
             {
                 return 0;
             }
-            else if (root.left == null && root.right == null)
+            else if (root.Left == null && root.Right == null)
             {
                 return 1;
             }
             else
             {
-                return num_of_leaves(root.left) + num_of_leaves(root.right);
+                return NumOfLeaves(root.Left) + NumOfLeaves(root.Right);
             }
         }
 
         //this is not requied for HW1 but I add this for practice
         //display number of full nodes
-        public void print_num_of_full_nodes()
+        public void PrintNumOfFullNodes()
         {
-            Console.WriteLine("Number of full nodes: " + num_of_full_nodes(root));
+            Console.WriteLine("Number of full nodes: " + NumOfFullNodes(Root));
         }
         ////this will be called recursively 
-        public int num_of_full_nodes(Node root)
+        public int NumOfFullNodes(Node root)
         {
             if (root == null)
             {
                 return 0;
             }
-            else if (root.left != null && root.right != null)
+            else if (root.Left != null && root.Right != null)
             {
-                return 1 + num_of_full_nodes(root.left) + num_of_full_nodes(root.right);
+                return 1 + NumOfFullNodes(root.Left) + NumOfFullNodes(root.Right);
             }
             else
             {
-                return num_of_full_nodes(root.left) + num_of_full_nodes(root.right);
+                return NumOfFullNodes(root.Left) + NumOfFullNodes(root.Right);
             }
         }
 

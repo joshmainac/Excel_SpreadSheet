@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HW1_JoshuaLong
+namespace HW1JoshuaLong
 {
     //I include class Node into the BST class because they are related and Node is only used in BST
     class Node

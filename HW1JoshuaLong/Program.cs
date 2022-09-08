@@ -1,7 +1,7 @@
 ﻿using System;
-using static HW1_JoshuaLong.BST;
+using static HW1JoshuaLong.BST;
 
-namespace HW1_JoshuaLong
+namespace HW1JoshuaLong
 {
 
     //test

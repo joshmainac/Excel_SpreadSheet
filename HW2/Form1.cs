@@ -44,8 +44,9 @@ namespace HW2
 
             //This will update the Textbox
             lblHelloWorld3.Text = "1. Hash Set method: " + resOne + " unique numbers" + Environment.NewLine +
-                "Here you will have info about the time complexity of your code" + Environment.NewLine +
-                "You also need info about how you determined it" + Environment.NewLine +
+                "Time complexity is O(n) because we only access each item once and the time complexity scales in linear" + Environment.NewLine +
+                "I determine this by checking the input and algorith and see how the operation chenages with different inputs" + Environment.NewLine +
+                "If we double the input size, the operation will only double because we only access each element once" + Environment.NewLine +
                 "2. O(1) storage method: " + resTwo + " unique numbers" + Environment.NewLine +
                 "3. Sorted method: " + resThree + " unique numbers";
 

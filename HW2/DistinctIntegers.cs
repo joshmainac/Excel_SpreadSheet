@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HW2
 {
-    class DistinctIntegers
+    public class DistinctIntegers
     {
         int[] array = new int[10000];
         //initialize a int list with 10000 elements

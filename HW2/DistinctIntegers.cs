@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace HW2
 {
+    //This will store int array[10000]
+    //Will assign this array with random numbers in the constructor
+    //Has DistinctIntegerOne~Three will get the distinct intergers from the array[10000]
     public class DistinctIntegers
     {
         int[] array = new int[10000];
         //initialize a int list with 10000 elements
         
-
+        //Generate random numbers in the constructor
         public DistinctIntegers()
         {
             Random rand = new Random();
@@ -23,7 +26,7 @@ namespace HW2
             }
             
         }
-
+        //get the distinct intergers from the array[10000], using hash
         public int DistinctIntegersOne()
         {
             //Hash will not contain duplicates
@@ -37,7 +40,7 @@ namespace HW2
 
             return myhash.Count;
         }
-
+        //get the distinct intergers from the array[10000], in O(1) space
         public int DistinctIntegersTwo()
         {
             //return number of disctinct integers in O(1) space
@@ -59,7 +62,7 @@ namespace HW2
             }
             return mynum;
         }
-
+        //get the distinct intergers from the array[10000], using sort
         public int DistinctIntegersThree()
         {
             //sort list

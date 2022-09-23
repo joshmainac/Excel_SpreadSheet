@@ -62,5 +62,26 @@ namespace HW3
             }
 
         }
+
+        private void FibonacciFifty()
+        {
+            FibonacciTextReader obj1 = new FibonacciTextReader(50);
+            textBox1.Text = obj1.ReadToEnd();
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            FibonacciFifty();
+
+        }
+        private void FibonacciHundred()
+        {
+            FibonacciTextReader obj1 = new FibonacciTextReader(100);
+            textBox1.Text = obj1.ReadToEnd();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            FibonacciHundred();
+        }
     }
 }

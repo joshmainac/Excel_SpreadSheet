@@ -8,7 +8,7 @@ using System.Numerics;
 namespace HW3
 {
     /// This class can return the next Fibonacci number in the sequence
-    class FibonacciTextReader : System.IO.TextReader
+    public class FibonacciTextReader : System.IO.TextReader
     {
         private int maxLines;
         private int currentLine;

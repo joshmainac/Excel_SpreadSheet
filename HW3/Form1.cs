@@ -23,6 +23,7 @@ namespace HW3
 
         }
 
+        //. It should read all the text from the TextReader object and put it in the text box in your interface.
         private void LoadText(TextReader sr)
         {
             string readfile = sr.ReadToEnd();
@@ -30,6 +31,7 @@ namespace HW3
 
         }
 
+        //This button Load a file
         private void button1_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
@@ -39,6 +41,7 @@ namespace HW3
 
         }
 
+        //This button will save a file
         private void button2_Click(object sender, EventArgs e)
         {
             Stream myStream;
@@ -63,22 +66,28 @@ namespace HW3
 
         }
 
+        //call FibonacciTextReader and generate the first 50 Fibonacci sequence
         private void FibonacciFifty()
         {
             FibonacciTextReader obj1 = new FibonacciTextReader(50);
             textBox1.Text = obj1.ReadToEnd();
         }
+
+        //Fibonacci 50 button will call FibonacciFifty()
         private void button3_Click(object sender, EventArgs e)
         {
             FibonacciFifty();
 
         }
+
+         //call FibonacciTextReader and generate the first 100 Fibonacci sequence
         private void FibonacciHundred()
         {
             FibonacciTextReader obj1 = new FibonacciTextReader(100);
             textBox1.Text = obj1.ReadToEnd();
         }
 
+        //Fibonacci 100 button will call FibonacciFifty()
         private void button4_Click(object sender, EventArgs e)
         {
             FibonacciHundred();

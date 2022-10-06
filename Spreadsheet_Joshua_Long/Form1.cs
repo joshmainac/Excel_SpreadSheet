@@ -37,9 +37,16 @@ namespace Spreadsheet_Joshua_Long
                 dataGridView1.Columns.Add(Convert.ToChar(i + 65).ToString(), Convert.ToChar(i + 65).ToString());
             }
 
-            
+            //Step 2 – Create Rows 1 to 50:
+            for (int i = 0; i < 50; i++)
+            {
+                dataGridView1.Rows.Add();
+                dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
+            }
 
-            
+
+
+
 
 
 

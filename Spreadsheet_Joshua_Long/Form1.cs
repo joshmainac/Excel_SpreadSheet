@@ -15,6 +15,22 @@ namespace Spreadsheet_Joshua_Long
         public Form1()
         {
             InitializeComponent();
+            InitializeDataGrid();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void InitializeDataGrid()
+        {
+            //clear
+            //dataGridView1.CancelEdit();
+            //dataGridView1.Columns.Clear();
+            //dataGridView1.DataSource = null;
+            //InitializeDataGridView();
+
         }
     }
 }

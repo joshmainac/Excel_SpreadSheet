@@ -26,11 +26,25 @@ namespace Spreadsheet_Joshua_Long
         private void InitializeDataGrid()
         {
             //clear
-            //dataGridView1.CancelEdit();
-            //dataGridView1.Columns.Clear();
-            //dataGridView1.DataSource = null;
+            dataGridView1.CancelEdit();
+            dataGridView1.Columns.Clear();
+            dataGridView1.DataSource = null;
             //InitializeDataGridView();
 
+            //Step 1 – Create Columns A to Z with code:
+            for (int i = 0; i < 26; i++)
+            {
+                dataGridView1.Columns.Add(Convert.ToChar(i + 65).ToString(), Convert.ToChar(i + 65).ToString());
+            }
+
+            
+
+            
+
+
+
         }
+
+
     }
 }

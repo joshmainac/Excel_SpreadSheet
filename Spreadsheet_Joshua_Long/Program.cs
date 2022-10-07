@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+
 namespace Spreadsheet_Joshua_Long
 {
     static class Program
@@ -17,6 +19,9 @@ namespace Spreadsheet_Joshua_Long
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
+            
+            
         }
     }
 }

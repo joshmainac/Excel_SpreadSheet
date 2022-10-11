@@ -8,14 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using SpreadsheetEngine;
+
 namespace Spreadsheet_Joshua_Long
 {
     public partial class Form1 : Form
     {
+        private Spreadsheet spreadsheet;
         public Form1()
         {
             InitializeComponent();
             InitializeDataGrid();
+            spreadsheet = new Spreadsheet(50, 26);
+            spreadsheet.PropertyChanged += UpdateGrid;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -44,18 +49,63 @@ namespace Spreadsheet_Joshua_Long
                 dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
             }
 
+        }
 
-
-
-
-
+        private void UpdateGrid(object sender, EventArgs e)
+        {
+            //dataGridView1.Rows[0].Cells[0].Value = "Hello";
+            //dataGridView1.Rows[0].Cells[0].Value = spreadsheet.GetCell(0, 0).Value;
+            for (int i = 0; i < 50; i++)
+            {
+                for (int j = 0; j < 26; j++)
+                {
+                    dataGridView1.Rows[i].Cells[j].Value = spreadsheet.GetCell(i,j).Value;
+                }
+            }
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //mod a spread sheet object
+            // set the text in about 50 random cells to a text string of your choice
+            Random random = new Random();
+            for (int i = 0; i < 50; i++)
+            {
+                int row = random.Next(0, 50);
+                int col = random.Next(0, 26);
+                spreadsheet.GetCell(row, col).Text = "Hello World";
+            }
+            //do a loop to set the text in every cell in column B to “This is cell B#”, where # number is the row number for the cell
+            for (int i = 0; i < 50; i++)
+            {
+                //dataGridView1[1, i].Value = 
+                spreadsheet.GetCell(i, 1).Text = "This is cell B" + (i + 1);
+            }
+
+            for (int i = 0; i < 50; i++)
+            {
+                //dataGridView1[0, i].Value = "=B" + (i + 1);
+                spreadsheet.GetCell(i, 0).Text = "=B" + (i + 1);
+            }
+
+
+
+
 
         }
     }
 }
+
+
+            //mod a spread sheet object
+            
+            // for(int i = 0;i <5;i++)
+            // {
+            //     for(int j =0; j <3;j++)
+            //     {
+            //         dataGridView1.Rows[i].Cells[j].Value = "aaa";
+
+            //     }
+            // }
+
+            // //spreadsheet.SpreadsheetArray[row, 0].Text = "=B" + row;

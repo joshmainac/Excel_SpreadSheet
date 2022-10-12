@@ -53,8 +53,7 @@ namespace Spreadsheet_Joshua_Long
 
         private void UpdateGrid(object sender, EventArgs e)
         {
-            //dataGridView1.Rows[0].Cells[0].Value = "Hello";
-            //dataGridView1.Rows[0].Cells[0].Value = spreadsheet.GetCell(0, 0).Value;
+ 
             for (int i = 0; i < 50; i++)
             {
                 for (int j = 0; j < 26; j++)
@@ -97,15 +96,4 @@ namespace Spreadsheet_Joshua_Long
 }
 
 
-            //mod a spread sheet object
-            
-            // for(int i = 0;i <5;i++)
-            // {
-            //     for(int j =0; j <3;j++)
-            //     {
-            //         dataGridView1.Rows[i].Cells[j].Value = "aaa";
-
-            //     }
-            // }
-
-            // //spreadsheet.SpreadsheetArray[row, 0].Text = "=B" + row;
+     

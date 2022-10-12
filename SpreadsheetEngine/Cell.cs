@@ -11,12 +11,12 @@ namespace SpreadsheetEngine
 {
     public abstract class Cell:INotifyPropertyChanged
     {
-        public string text;
+        protected string text;
         protected string value;
         //Add a RowIndex property that is read only
-        public int RowIndex { get; private set; }
+        public int RowIndex { get; internal set; }
         //Add a ColumnIndex property that is read only
-        public int ColumnIndex { get; private set; }
+        public int ColumnIndex { get; internal set; }
         public Cell()
         {
             text = "";

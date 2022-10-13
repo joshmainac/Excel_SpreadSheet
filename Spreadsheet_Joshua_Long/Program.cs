@@ -19,11 +19,6 @@ namespace Spreadsheet_Joshua_Long
         [STAThread]
         static void Main()
         {
-            //int A = 0;
-            //Spreadsheet obj1 = new Spreadsheet(26, 50);
-            //obj1.Cells[0, 0].Text = "joshua";
-            //obj1.PropertyChanged += CellPropertyChanged;
-            //obj1.Cells[0, 0].Text = "joshua";
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -31,11 +26,5 @@ namespace Spreadsheet_Joshua_Long
 
         }
 
-        static void CellPropertyChanged(object sender, EventArgs e)
-        {
-
-            Console.WriteLine("llll");
-
-        }
     }
 }

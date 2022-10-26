@@ -106,7 +106,10 @@ namespace ExpressionTreeEngine
                 if (0 == parenthesisCounter && op == expression[expressionIndex])
                 {
                     // build an operator node
-                    OperatorNode operatorNode = new OperatorNode(expression[expressionIndex]);
+                    //OperatorNode operatorNode = new OperatorNode(expression[expressionIndex]);
+                    OperatorNode operatorNode = OperateNodeFactory.CreateOperatorNode(expression[expressionIndex]);
+
+
                     // and start over with the left and right sub-expressions
                     operatorNode.Left = Compile(expression.Substring(0, expressionIndex));
                     operatorNode.Right = Compile(expression.Substring(expressionIndex + 1));

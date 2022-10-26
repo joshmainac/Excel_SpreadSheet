@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreadsheet_Joshua_LongTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadsheetEngine", "..\SpreadsheetEngine\SpreadsheetEngine.csproj", "{1FF1741F-66AC-4D7F-9122-1E6BA69210CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW5ConsoleApp", "..\HW5ConsoleApp\HW5ConsoleApp.csproj", "{5E8B11F7-3ADA-4179-8C39-553286172E40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW6ConsoleApp", "..\HW5ConsoleApp\HW6ConsoleApp.csproj", "{5E8B11F7-3ADA-4179-8C39-553286172E40}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionTreeEngine", "..\ExpressionTreeEngine\ExpressionTreeEngine.csproj", "{95A3AB6B-CCA6-4207-B0E6-DF25D05F1707}"
 EndProject

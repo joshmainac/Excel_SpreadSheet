@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW6ConsoleApp", "..\HW5Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionTreeEngine", "..\ExpressionTreeEngine\ExpressionTreeEngine.csproj", "{95A3AB6B-CCA6-4207-B0E6-DF25D05F1707}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadsheetTests", "..\SpreadsheetTests\SpreadsheetTests.csproj", "{AB1E4FED-A5C0-4EC3-B592-565EEA9557DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{95A3AB6B-CCA6-4207-B0E6-DF25D05F1707}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95A3AB6B-CCA6-4207-B0E6-DF25D05F1707}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95A3AB6B-CCA6-4207-B0E6-DF25D05F1707}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB1E4FED-A5C0-4EC3-B592-565EEA9557DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB1E4FED-A5C0-4EC3-B592-565EEA9557DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB1E4FED-A5C0-4EC3-B592-565EEA9557DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB1E4FED-A5C0-4EC3-B592-565EEA9557DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

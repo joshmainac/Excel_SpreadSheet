@@ -10,36 +10,20 @@ namespace ExpressionTreeEngine
     {
         public static OperatorNode CreateOperatorNode(char op)
         {
-            //switch (op)
-            //{
-            //    case '+':
-            //        return new AddNode();
-            //    case '-':
-            //        return new SubNode();
-            //    case '*':
-            //        return new MulNode();
-            //    case '/':
-            //        return new DivNode();
-            //    default:
-            //        throw new ArgumentException("Invalid operator");
-
-            //}
             switch (op)
             {
                 case '+':
-                    return new OperatorNode(op);
+                    return new AddNode();
                 case '-':
-                    return new OperatorNode(op);
+                    return new SubNode();
                 case '*':
-                    return new OperatorNode(op);
+                    return new MulNode();
                 case '/':
-                    return new OperatorNode(op);
+                    return new DivNode();
                 default:
                     throw new ArgumentException("Invalid operator");
 
             }
-          
-
 
         }
     }

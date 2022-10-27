@@ -6,17 +6,25 @@ using System.Threading.Tasks;
 
 namespace ExpressionTreeEngine
 {
-    internal class OperatorNode : Node
+    internal abstract class OperatorNode : Node
     {
-        public OperatorNode(char c)
-        {
-            Operator = c;
-            Left = Right = null;
-        }
+        //public OperatorNode(char c)
+        //{
+        //    Operator = c;
+        //    Left = Right = null;
+        //}
+
+        //public OperatorNode()
+        //{
+        //    Operator = '+';
+        //    Left = Right = null;
+        //}
 
         public char Operator { get; set; }
 
         public Node Left { get; set; }
         public Node Right { get; set; }
+
+        public abstract override double Evaluate();
     }
 }

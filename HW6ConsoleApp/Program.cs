@@ -62,6 +62,11 @@ namespace HW6ConsoleApp
                     Console.ReadKey();
                     option = false;
                 }
+                else if (choice == "5")
+                {
+                    Console.WriteLine("Showing the variables table");
+                
+                }
                 else
                 {
                     Console.WriteLine("Invalid choice");

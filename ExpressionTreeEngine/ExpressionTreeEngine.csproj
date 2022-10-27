@@ -41,12 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddNode.cs" />
     <Compile Include="ConstantNode.cs" />
+    <Compile Include="DivNode.cs" />
+    <Compile Include="MulNode.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="ExpressionTree.cs" />
     <Compile Include="OperateNodeFactory.cs" />
     <Compile Include="OperatorNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubNode.cs" />
     <Compile Include="VariableNode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

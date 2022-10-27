@@ -9,7 +9,7 @@ namespace ExpressionTreeEngine
     public class ExpressionTree
     {
         private Node root;
-        private Dictionary<string, double> variables = new Dictionary<string, double>();
+        internal static Dictionary<string, double> variables = new Dictionary<string, double>();
         public ExpressionTree(string expression)
         {
             root = Compile(expression);
@@ -70,19 +70,14 @@ namespace ExpressionTreeEngine
             if (double.TryParse(s, out number))
             {
                 // We need a ConstantNode
-                return new ConstantNode()
-                {
-                    Value = number
-                };
+                //mod
+                return new ConstantNode(number);
             }
             // or variable
             else
             {
-                // We need a VariableNode
-                return new VariableNode()
-                {
-                    Name = s
-                };
+
+                return new VariableNode(s);
             }
         }
         private static Node Compile(string expression, char op)
@@ -134,51 +129,11 @@ namespace ExpressionTreeEngine
 
         public double Evaluate()
         {
-            return Evaluate(root);
+            //return Evaluate(root);
+            return root.Evaluate();
         }
-        private double Evaluate(Node node)
-        {
-            // try to evaluate the node as a constant
-            // the "as" operator is evaluated to null 
-            // as opposed to throwing an exception
-            ConstantNode constantNode = node as ConstantNode;
-            if (null != constantNode)
-            {
-                return constantNode.Value;
-            }
 
-            // as a variable
-            VariableNode variableNode = node as VariableNode;
-            if (null != variableNode)
-            {
-                return variables[variableNode.Name];
-            }
-
-            // it is an operator node if we came here
-            OperatorNode operatorNode = node as OperatorNode;
-            if (null != operatorNode)
-            {
-                // but which one?
-                switch (operatorNode.Operator)
-                {
-                    case '+':
-                        return Evaluate(operatorNode.Left) + Evaluate(operatorNode.Right);
-                    case '-':
-                        return Evaluate(operatorNode.Left) - Evaluate(operatorNode.Right);
-                    case '*':
-                        return Evaluate(operatorNode.Left) * Evaluate(operatorNode.Right);
-                    case '/':
-                        return Evaluate(operatorNode.Left) / Evaluate(operatorNode.Right);
-                    case '^':
-                        return Math.Pow(Evaluate(operatorNode.Left), Evaluate(operatorNode.Right));
-                    default: // if it is not any of the operators that we support, throw an exception:
-                        throw new NotSupportedException(
-                            "Operator " + operatorNode.Operator.ToString() + " not supported.");
-                }
-            }
-
-            throw new NotSupportedException();
-        }
+       
 
         
     }

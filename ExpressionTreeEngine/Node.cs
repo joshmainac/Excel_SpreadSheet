@@ -8,5 +8,6 @@ namespace ExpressionTreeEngine
 {
     public abstract class Node
     {
+        public abstract double Evaluate();
     }
 }

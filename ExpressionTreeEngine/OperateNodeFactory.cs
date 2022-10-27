@@ -10,20 +10,25 @@ namespace ExpressionTreeEngine
     {
         public static OperatorNode CreateOperatorNode(char op)
         {
-            switch (op)
-            {
-                case '+':
-                    return new AddNode();
-                case '-':
-                    return new SubNode();
-                case '*':
-                    return new MulNode();
-                case '/':
-                    return new DivNode();
-                default:
-                    throw new ArgumentException("Invalid operator");
 
+            Dictionary<char, OperatorNode> OperatorDict = new Dictionary<char, OperatorNode>()
+            {
+                {'+', new AddNode()},
+                {'-', new SubNode()},
+                {'*', new MulNode()},
+                {'/', new DivNode()}
+
+            };
+            if (OperatorDict.ContainsKey(op))
+            {
+                return OperatorDict[op];
             }
+            else
+            {
+                throw new ArgumentException("Invalid operator");
+                //return null;
+            }
+
 
         }
     }

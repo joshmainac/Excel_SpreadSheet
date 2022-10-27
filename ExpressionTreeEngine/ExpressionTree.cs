@@ -13,11 +13,12 @@ namespace ExpressionTreeEngine
         public string PostFixExpression { get; set; }
         public ExpressionTree(string expression)
         {
+            CreatePostfix(expression);
             root = Compile(expression);
         }
 
         private OperatorNode Root { get; set; }
-        private static Node Compile3(string s)
+        private static Node Compile(string s)
         {
             if (string.IsNullOrEmpty(s))
             {
@@ -138,16 +139,13 @@ namespace ExpressionTreeEngine
         //Parse the expression string and build the expression tree more elegantly
         //use The Shunting Yard Algorithm
         //Transform the expression into a postfix order
-        private static Node Compile(string s)
+        private void CreatePostfix(string s)
         {
             //use Shunting Yard Algorithm
-            //Transform the expression into a postfix order
-            //use a stack to store the operators
-            Stack<char> operatorStack = new Stack<char>();
-            //use a queue to store the postfix order
             Queue<string> postfixQueue = new Queue<string>();
-            //use a stack to store the operands
+            Stack<char> operatorStack = new Stack<char>();
             Stack<Node> operandStack = new Stack<Node>();
+            //the givem expression is in infix order we want to convert this to postfix
             //iterate through the expression
             for (int i = 0; i < s.Length; i++)
             {
@@ -156,6 +154,8 @@ namespace ExpressionTreeEngine
                 {
                     //add the digit to the postfix queue
                     postfixQueue.Enqueue(s[i].ToString());
+                    //handle more then one diget numbers with a loop
+
                 }
                 //if the character is an operator
                 else if (s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '^')
@@ -183,73 +183,68 @@ namespace ExpressionTreeEngine
                             //push the current operator to the operator stack
                             operatorStack.Push(s[i]);
                         }
-                        
-              
                     }
                 }
-                //if the character is a left parenthesis
+                //if the character is an open parenthesis
                 else if (s[i] == '(')
                 {
-                    //push the left parenthesis to the operator stack
+                    //push the open parenthesis to the operator stack
                     operatorStack.Push(s[i]);
                 }
-                //if the character is a right parenthesis
+                //if the character is a closed parenthesis
                 else if (s[i] == ')')
                 {
-                    //while the operator on the top of the operator stack is not a left parenthesis
+                    //while the operator on the top of the operator stack is not an open parenthesis
                     while (operatorStack.Peek() != '(')
                     {
                         //pop the operator from the operator stack and add it to the postfix queue
                         postfixQueue.Enqueue(operatorStack.Pop().ToString());
                     }
-                    //pop the left parenthesis from the operator stack
+                    //pop the open parenthesis from the operator stack
                     operatorStack.Pop();
                 }
+                else if (s[i] == ' ')
+                {
+
+                }
+                else
+                {
+                    //this handles variables
+                    //update index till end of variable
+                    string variableNameBuilder = "";
+                    int temp = i;
+
+                    while (i < s.Length && char.IsLetter(s[i]))
+                    {
+                        variableNameBuilder += s[i];
+                        i++;
+                    }
+                    //add the variable to the postfix queue
+                    postfixQueue.Enqueue(variableNameBuilder);
+                    i--;
+
+
+
+
+
+                }
             }
-            //create PostFixExpression
-            string postFixExpression = "";
-            //while the postfix queue is not empty
-            while (postfixQueue.Count != 0)
-            {
-                //dequeue the first element from the postfix queue and add it to the postfix expression
-                postFixExpression += postfixQueue.Dequeue();
-            }
-            //while the operator stack is not empty
+            //update PostFixExpression 
+            PostFixExpression = string.Join(" ", postfixQueue.ToArray());
+            //update the postfix queue
             while (operatorStack.Count != 0)
             {
-                //pop the operator from the operator stack and add it to the postfix expression
-                postFixExpression += operatorStack.Pop();
+                postfixQueue.Enqueue(operatorStack.Pop().ToString());
             }
-            //iterate through the postfix expression
-            for (int i = 0; i < postFixExpression.Length; i++)
-            {
-                //if the character is a digit
-                if (char.IsDigit(postFixExpression[i]))
-                {
-                    //push the digit to the operand stack
-                    operandStack.Push(new ConstantNode(double.Parse(postFixExpression[i].ToString())));
-                }
-                //if the character is an operator
-                else if (postFixExpression[i] == '+' || postFixExpression[i] == '-' || postFixExpression[i] == '*' || postFixExpression[i] == '/' || postFixExpression[i] == '^')
-                {
-                    //create an operator node
-                    //OperatorNode operatorNode = new OperatorNode(postFixExpression[i]);
-                    OperatorNode operatorNode = OperateNodeFactory.CreateOperatorNode(postFixExpression[i]);
-                    //pop the right operand from the operand stack and set it as the right child of the operator node
-                    operatorNode.Right = operandStack.Pop();
-                    //pop the left operand from the operand stack and set it as the left child of the operator node
-                    operatorNode.Left = operandStack.Pop();
-                    //push the operator node to the operand stack
-                    operandStack.Push(operatorNode);
-                }
-            }
-            //return the root of the expression tree
-            return operandStack.Pop();
-            
+            PostFixExpression = string.Join(" ", postfixQueue.ToArray());
 
-            
 
         }
+        //(2+3)*(4+5)
+        //23+45+* 
+
+        //x ^ y / (5 * z) + 10
+        //x y ^ 5 z * / 10 +
 
 
         private static int GetPrecedence(char op)

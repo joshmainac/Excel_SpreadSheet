@@ -60,11 +60,10 @@ namespace SpreadsheetTests
             Assert.That(tree.PostFixExpression == "2 3 + 4 5 + *");
 
             ExpressionTree tree2 = new ExpressionTree("x * y / (5 * z) + 10");
-            //Assert.That(tree2.PostFixExpression == "x y * 5 z * / 10 +");
-            //"x y * 5 z * / 1 0 +"
+            Assert.That(tree2.PostFixExpression == "x y * 5 z * / 10 +");
 
-            //ExpressionTree tree3 = new ExpressionTree("xxx * y / (5 * zz) + 10");
-            //Assert.That(tree3.PostFixExpression == "xxx y * 5 zz * / 10 +");
+            ExpressionTree tree3 = new ExpressionTree("xxx * y / (5 * zz) + 10");
+            Assert.That(tree3.PostFixExpression == "xxx y * 5 zz * / 10 +");
 
         }
 

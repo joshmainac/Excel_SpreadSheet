@@ -153,8 +153,15 @@ namespace ExpressionTreeEngine
                 if (char.IsDigit(s[i]))
                 {
                     //add the digit to the postfix queue
-                    postfixQueue.Enqueue(s[i].ToString());
                     //handle more then one diget numbers with a loop
+                    string number = string.Empty;
+                    while (i < s.Length && char.IsDigit(s[i]))
+                    {
+                        number += s[i];
+                        i++;
+                    }
+                    i--;
+                    postfixQueue.Enqueue(number);
 
                 }
                 //if the character is an operator

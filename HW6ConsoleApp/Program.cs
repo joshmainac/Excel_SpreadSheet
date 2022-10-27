@@ -20,8 +20,9 @@ namespace HW6ConsoleApp
             // 2 = Set a variable value
             // 3 = Evaluate tre
             // 4 = Quit
-            expressionTree = new ExpressionTree("A1+A2");
+            expressionTree = new ExpressionTree("x * y / (5 * z) + 10");
             string expression = "A1+A2";
+            expression = "1+1";
             bool option = true;
             while (option)
             {

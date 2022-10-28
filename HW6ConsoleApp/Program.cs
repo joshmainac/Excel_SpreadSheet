@@ -20,8 +20,9 @@ namespace HW6ConsoleApp
             // 2 = Set a variable value
             // 3 = Evaluate tre
             // 4 = Quit
-            expressionTree = new ExpressionTree("x * y / (5 * z) + 10");
+            expressionTree = new ExpressionTree("A1+A2");
             string expression = "A1+A2";
+            //"x * y / (5 * z) + 10"
             bool option = true;
             while (option)
             {
@@ -38,6 +39,7 @@ namespace HW6ConsoleApp
                 {
                     Console.WriteLine("Please enter your expression: ");
                     expression = Console.ReadLine();
+                    expressionTree.ClearVariables();
                     expressionTree = new ExpressionTree(expression);
                 }
                 else if (choice == "2")

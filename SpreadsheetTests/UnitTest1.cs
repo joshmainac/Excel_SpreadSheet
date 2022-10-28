@@ -75,6 +75,8 @@ namespace SpreadsheetTests
             ExpressionTree tree3 = new ExpressionTree("xxx * y / (5 * zz) + 10");
             Assert.That(tree3.PostFixExpression == "xxx y * 5 zz * / 10 +");
 
+
+
         }
 
     }

@@ -25,6 +25,11 @@ namespace ExpressionTreeEngine
             variables[name] = value;
         }
 
+        public void ClearVariables()
+        {
+            variables.Clear();
+        }
+
         public double Evaluate()
         {
             //return Evaluate(root);

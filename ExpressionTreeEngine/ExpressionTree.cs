@@ -45,8 +45,32 @@ namespace ExpressionTreeEngine
             //iterate through the expression
             for (int i = 0; i < s.Length; i++)
             {
+                
+                
+                //if the character is an open parenthesis
+                if (s[i] == '(')
+                {
+                    //push the open parenthesis to the operator stack
+                    operatorStack.Push(s[i]);
+                }
+                //if the character is a closed parenthesis
+                else if (s[i] == ')')
+                {
+                    //while the operator on the top of the operator stack is not an open parenthesis
+                    while (operatorStack.Peek() != '(')
+                    {
+                        //pop the operator from the operator stack and add it to the postfix queue
+                        postfixQueue.Enqueue(operatorStack.Pop().ToString());
+                    }
+                    //pop the open parenthesis from the operator stack
+                    operatorStack.Pop();
+                }
+                else if (s[i] == ' ')
+                {
+
+                }
                 //if the character is a digit
-                if (char.IsDigit(s[i]))
+                else if (char.IsDigit(s[i]))
                 {
                     //add the digit to the postfix queue
                     //handle more then one diget numbers with a loop
@@ -61,7 +85,7 @@ namespace ExpressionTreeEngine
 
                 }
                 //if the character is an operator
-                else if (s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '^')
+                else if (!char.IsLetter(s[i]))
                 {
                     //if the operator stack is empty
                     if (operatorStack.Count == 0)
@@ -87,28 +111,6 @@ namespace ExpressionTreeEngine
                             operatorStack.Push(s[i]);
                         }
                     }
-                }
-                //if the character is an open parenthesis
-                else if (s[i] == '(')
-                {
-                    //push the open parenthesis to the operator stack
-                    operatorStack.Push(s[i]);
-                }
-                //if the character is a closed parenthesis
-                else if (s[i] == ')')
-                {
-                    //while the operator on the top of the operator stack is not an open parenthesis
-                    while (operatorStack.Peek() != '(')
-                    {
-                        //pop the operator from the operator stack and add it to the postfix queue
-                        postfixQueue.Enqueue(operatorStack.Pop().ToString());
-                    }
-                    //pop the open parenthesis from the operator stack
-                    operatorStack.Pop();
-                }
-                else if (s[i] == ' ')
-                {
-
                 }
                 else
                 {
@@ -152,25 +154,25 @@ namespace ExpressionTreeEngine
             //if the operator is a plus or minus
             if (op == '+' || op == '-')
             {
-                //return 1
+       
                 return 1;
             }
             //if the operator is a multiply or divide
             else if (op == '*' || op == '/')
             {
-                //return 2
+  
                 return 2;
             }
             //if the operator is a power
             else if (op == '^')
             {
-                //return 3
+    
                 return 3;
             }
             //if the operator is not a plus, minus, multiply, divide, or power
             else
             {
-                //return 0
+             
                 return 0;
             }
         }

@@ -220,13 +220,19 @@ namespace ExpressionTreeEngine
                     //this handles variables
                     //update index till end of variable
                     string variableNameBuilder = "";
-                    int temp = i;
-
-                    while (i < s.Length && char.IsLetter(s[i]))
+       
+                    //make this handle variables and numbers like A1 B2.
+                    while (i < s.Length && (char.IsLetter(s[i]) || char.IsDigit(s[i])))
                     {
                         variableNameBuilder += s[i];
                         i++;
                     }
+                    
+                    // while (i < s.Length && char.IsLetter(s[i]))
+                    // {
+                    //     variableNameBuilder += s[i];
+                    //     i++;
+                    // }
                     //add the variable to the postfix queue
                     postfixQueue.Enqueue(variableNameBuilder);
                     i--;

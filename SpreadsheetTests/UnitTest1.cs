@@ -44,12 +44,22 @@ namespace SpreadsheetTests
         }
 
         [Test]
-        public void Testvariable()
+        public void Testvariable1()
         {
             ExpressionTree tree = new ExpressionTree("A+B");
             Assert.That(tree.Evaluate() == 0);
             tree.SetVariable("A", 3);
             tree.SetVariable("B", 6);
+            Assert.That(tree.Evaluate() == 9);
+
+        }
+        [Test]
+        public void Testvariable2()
+        {
+            ExpressionTree tree = new ExpressionTree("A1+B2");
+            Assert.That(tree.Evaluate() == 0);
+            tree.SetVariable("A1", 3);
+            tree.SetVariable("B2", 6);
             Assert.That(tree.Evaluate() == 9);
 
         }

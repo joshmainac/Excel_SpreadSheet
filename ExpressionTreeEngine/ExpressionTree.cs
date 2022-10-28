@@ -14,7 +14,8 @@ namespace ExpressionTreeEngine
         public ExpressionTree(string expression)
         {
             CreatePostfix(expression);
-            root = Compile(expression);
+            //root = Compile(expression);
+            BuildTree();
         }
 
         private OperatorNode Root { get; set; }
@@ -247,12 +248,6 @@ namespace ExpressionTreeEngine
 
 
         }
-        //(2+3)*(4+5)
-        //23+45+* 
-
-        //x ^ y / (5 * z) + 10
-        //x y ^ 5 z * / 10 +
-
 
         private static int GetPrecedence(char op)
         {
@@ -281,6 +276,57 @@ namespace ExpressionTreeEngine
                 return 0;
             }
         }
+
+        //Builed the expression tree from the PostFixExpression 
+        private void BuildTree()
+        {
+            //tokenize the PostFixExpression
+            string[] tokens = PostFixExpression.Split(' ');
+            //create a stack
+            Stack<Node> stack = new Stack<Node>();
+            //iterate through the tokens
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                //if the token is a number
+                if (tokens[i].All(char.IsDigit))
+                {
+                    //create a number node
+                    ConstantNode numberNode = new ConstantNode(double.Parse(tokens[i]));
+                    //push the number node to the stack
+                    stack.Push(numberNode);
+                }
+                //if the token is a variable. variable can include degits
+                else if (tokens[i].Any(char.IsLetter))
+                {
+                    //create a variable node
+                    VariableNode variableNode = new VariableNode(tokens[i]);
+                    //push the variable node to the stack
+                    stack.Push(variableNode);
+                }
+                //if the token is an operator
+                else if (tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "*" || tokens[i] == "/" || tokens[i] == "^")
+                {
+                    //create an operator node
+                    OperatorNode operatorNode = OperateNodeFactory.CreateOperatorNode(tokens[i][0]);
+                    //pop the right node from the stack
+                    Node rightNode = stack.Pop();
+                    //pop the left node from the stack
+                    Node leftNode = stack.Pop();
+                    //set the left node of the operator node to the left node
+                    operatorNode.Left = leftNode;
+                    //set the right node of the operator node to the right node
+                    operatorNode.Right = rightNode;
+                    //push the operator node to the stack
+                    stack.Push(operatorNode);
+                }
+            }
+
+            //set the root node to the node on the top of the stack
+            root = (OperatorNode)stack.Pop();
+
+
+        }
+        
 
 
 

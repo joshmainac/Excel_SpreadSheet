@@ -6,19 +6,17 @@ using System.Threading.Tasks;
 
 namespace ExpressionTreeEngine
 {
-    internal class ConstantNode : Node
+    internal class AddNode : OperatorNode
     {
-        public double Value { get; set; }
-        public ConstantNode(double value)
+        public AddNode()
         {
-            Value = value;
+            this.Operator = '+';
         }
+ 
+
         public override double Evaluate()
         {
-            return Value;
+            return this.Left.Evaluate() + this.Right.Evaluate();
         }
-
-
-
     }
 }

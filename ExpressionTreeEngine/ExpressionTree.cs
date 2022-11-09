@@ -13,6 +13,7 @@ namespace ExpressionTreeEngine
         public string PostFixExpression { get; set; }
         public ExpressionTree(string expression)
         {
+            ClearVariables();
             CreatePostfix(expression);
             //root = Compile(expression);
             BuildTree();

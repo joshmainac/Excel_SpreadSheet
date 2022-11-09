@@ -87,10 +87,27 @@ namespace SpreadsheetEngine
             if (text[0] == '=')
             {
                 //remove the equal sign
-                string expression = text.Substring(1);
-
-                
+                string expression = text.Substring(1) + "+0";
                 ExpressionTree expressionTree = new ExpressionTree(expression);
+
+                //use GetVariableNames to set variables
+                string[] variables = expressionTree.GetVariableNames();
+                foreach (string variable in variables)
+                {
+                    //get the row and column index of the variable
+                    int row = variable[0] - 'A';
+                    int column = int.Parse(variable.Substring(1)) - 1;
+                    //get the value of the cell
+                    string value = Cells[row, column].Value;
+                    //if the value is empty, return empty string
+                    if (value == "")
+                        return "";
+                    //set the variable in the expression tree
+                    expressionTree.SetVariable(variable, double.Parse(value));
+                }
+
+
+
                 return expressionTree.Evaluate().ToString();
                 
 

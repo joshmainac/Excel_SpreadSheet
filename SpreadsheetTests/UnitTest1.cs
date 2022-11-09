@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using ExpressionTreeEngine;
+using SpreadsheetEngine;
 
 namespace SpreadsheetTests
 {
@@ -78,6 +79,26 @@ namespace SpreadsheetTests
 
 
         }
+        [Test]
+        public void TestSpreadsheet_Evaluate()
+        {
+            //SpreadsheetEngine.Spreadsheet.cs has a Evaluate(). We want to test this
+            Spreadsheet spreadsheet;
+            spreadsheet = new Spreadsheet(50, 26);
+            spreadsheet.GetCell(1, 1).Text = "=1+1";
+            Assert.That(spreadsheet.GetCell(1, 1).Value == "2");
+
+
+
+
+        }
+
+
+
+
 
     }
 }
+
+
+

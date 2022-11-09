@@ -27,8 +27,19 @@ namespace ExpressionTreeEngine
 
         public string [] GetVariableNames()
         {
-            //return all values from variables dictionary
-            return variables.Keys.ToArray();
+            List<string> variableNames = new List<string>();
+            string[] tokens = PostFixExpression.Split(' ');
+            foreach(var token in tokens)
+            {
+                //if token does not include A-Z skip it
+                if (token.Any(char.IsLetter))
+                {
+                    variableNames.Add(token);
+                }
+            }
+            return variableNames.ToArray();
+
+
         }
 
         public void ClearVariables()

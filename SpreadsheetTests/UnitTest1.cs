@@ -85,14 +85,10 @@ namespace SpreadsheetTests
         public void TestGetVariableNames()
         {
             ExpressionTree tree = new ExpressionTree("A1+B2");
-            string[] mylist ={ "A1", "B2" };
-            Assert.That(tree.GetVariableNames() == Array("A1","B2"));
-            tree.SetVariable("A1", 3);
-            tree.SetVariable("B2", 6);
-            Assert.That(tree.Evaluate() == 9);
-
-
-
+            string[] mylist1 ={ "A1", "B2" };
+            string[] mylist2 = tree.GetVariableNames();
+            Assert.That(mylist1[0].Equals(mylist2[0]));
+            Assert.That(mylist1[1].Equals(mylist2[1]));
 
 
         }

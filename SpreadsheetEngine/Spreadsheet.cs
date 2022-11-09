@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using System.ComponentModel;
 
+using ExpressionTreeEngine;
+
 namespace SpreadsheetEngine
 {
     public class Spreadsheet : INotifyPropertyChanged
@@ -84,28 +86,20 @@ namespace SpreadsheetEngine
             //if the text starts with an equal sign
             if (text[0] == '=')
             {
-                //if you see the text in the cell starting with ‘=’ then assume the remaining part is the name of the cell we need to copy a value from
-                //get the name of the cell
-                string cellName = text.Substring(1);
+                //remove the equal sign
                 string expression = text.Substring(1);
-                //split the expression into tokens
-                string[] tokens = expression.Split(' ');
-                //if just one token
-                if (tokens.Length == 1)
-                {
-                    //get the cell
-                    Cell c = GetCell(cellName);
-                    //if the cell is null, return empty string
-                    if (c == null)
-                        return "";
-                    //if the cell is not null, return the value of the cell
-                    return c.Value;
-                }
-                return cellName;
-  
+
+                
+                ExpressionTree expressionTree = new ExpressionTree(expression);
+                return expressionTree.Evaluate().ToString();
+                
+
+
+
 
             }
             else return cell.Text;
+
 
 
         }

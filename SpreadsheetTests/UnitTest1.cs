@@ -2,6 +2,8 @@ using NUnit.Framework;
 using ExpressionTreeEngine;
 using SpreadsheetEngine;
 
+
+
 namespace SpreadsheetTests
 {
     public class Tests
@@ -80,6 +82,21 @@ namespace SpreadsheetTests
 
         }
         [Test]
+        public void TestGetVariableNames()
+        {
+            ExpressionTree tree = new ExpressionTree("A1+B2");
+            string[] mylist ={ "A1", "B2" };
+            Assert.That(tree.GetVariableNames() == Array("A1","B2"));
+            tree.SetVariable("A1", 3);
+            tree.SetVariable("B2", 6);
+            Assert.That(tree.Evaluate() == 9);
+
+
+
+
+
+        }
+        [Test]
         public void TestSpreadsheet_Evaluate()
         {
             //SpreadsheetEngine.Spreadsheet.cs has a Evaluate(). We want to test this
@@ -92,6 +109,23 @@ namespace SpreadsheetTests
 
 
         }
+        [Test]
+        public void TestSpreadsheet_Evaluate2()
+        {
+            //SpreadsheetEngine.Spreadsheet.cs has a Evaluate(). We want to test this
+            Spreadsheet spreadsheet;
+            spreadsheet = new Spreadsheet(50, 26);
+            spreadsheet.GetCell(0, 0).Text = "1";
+            spreadsheet.GetCell(0, 1).Text = "=A1";
+            Assert.That(spreadsheet.GetCell(0, 1).Value == "1");
+
+
+
+
+
+        }
+
+        
 
 
 

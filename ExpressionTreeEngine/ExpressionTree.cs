@@ -25,6 +25,12 @@ namespace ExpressionTreeEngine
             variables[name] = value;
         }
 
+        public string [] GetVariableNames()
+        {
+            //return all values from variables dictionary
+            return variables.Keys.ToArray();
+        }
+
         public void ClearVariables()
         {
             variables.Clear();

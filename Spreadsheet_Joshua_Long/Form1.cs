@@ -72,7 +72,7 @@ namespace Spreadsheet_Joshua_Long
             {
                 int row = random.Next(0, 50);
                 int col = random.Next(0, 26);
-                spreadsheet.GetCell(row, col).Text = "Hello World";
+                spreadsheet.GetCell(row, col).Text = "1+1";
             }
             //do a loop to set the text in every cell in column B to “This is cell B#”, where # number is the row number for the cell
             for (int i = 0; i < 50; i++)

@@ -64,6 +64,21 @@ namespace Spreadsheet_Joshua_Long
 
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //can copy numers but not Text
         private void button1_Click(object sender, EventArgs e)
         {
             // set the text in about 50 random cells to a text string of your choice
@@ -72,13 +87,13 @@ namespace Spreadsheet_Joshua_Long
             {
                 int row = random.Next(0, 50);
                 int col = random.Next(0, 26);
-                spreadsheet.GetCell(row, col).Text = "1+1";
+                spreadsheet.GetCell(row, col).Text = "=1+1";
             }
             //do a loop to set the text in every cell in column B to “This is cell B#”, where # number is the row number for the cell
             for (int i = 0; i < 50; i++)
             {
                 //dataGridView1[1, i].Value = 
-                spreadsheet.GetCell(i, 1).Text = "This is cell B" + (i + 1);
+                spreadsheet.GetCell(i, 1).Text = "10";
             }
 
             for (int i = 0; i < 50; i++)
@@ -90,6 +105,20 @@ namespace Spreadsheet_Joshua_Long
 
 
 
+
+
+        }
+
+        private void dataGridView1_CellBeginEdit_1(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = spreadsheet.GetCell(e.RowIndex, e.ColumnIndex).Text;
+
+
+        }
+
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = spreadsheet.GetCell(e.RowIndex, e.ColumnIndex).Value;
 
         }
     }

@@ -95,8 +95,8 @@ namespace SpreadsheetEngine
                 foreach (string variable in variables)
                 {
                     //get the row and column index of the variable
-                    int row = variable[0] - 'A';
-                    int column = int.Parse(variable.Substring(1)) - 1;
+                    int column = variable[0] - 'A';
+                    int row = int.Parse(variable.Substring(1)) - 1;
                     //get the value of the cell
                     string value = Cells[row, column].Value;
                     //if the value is empty, return empty string

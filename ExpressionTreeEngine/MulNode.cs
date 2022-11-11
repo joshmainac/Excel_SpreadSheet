@@ -14,6 +14,9 @@ namespace ExpressionTreeEngine
         }
 
 
+        public override ushort Precedence { get; set; } = 2;
+
+
         public override double Evaluate()
         {
             return this.Left.Evaluate() * this.Right.Evaluate();

@@ -12,7 +12,10 @@ namespace ExpressionTreeEngine
         {
             this.Operator = '+';
         }
- 
+
+        public override ushort Precedence { get; set; } = 1;
+
+
 
         public override double Evaluate()
         {

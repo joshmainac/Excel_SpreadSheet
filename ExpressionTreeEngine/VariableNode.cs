@@ -24,7 +24,8 @@ namespace ExpressionTreeEngine
             }
             else
             {
-                return 0;
+                //return 0;
+                throw new ArgumentException("Invalid variable");
             }
 
 

@@ -53,5 +53,11 @@
     <Analyzer Include="..\Spreadsheet_Joshua_Long\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\Spreadsheet_Joshua_Long\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExpressionTreeEngine\ExpressionTreeEngine.csproj">
+      <Project>{95a3ab6b-cca6-4207-b0e6-df25d05f1707}</Project>
+      <Name>ExpressionTreeEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

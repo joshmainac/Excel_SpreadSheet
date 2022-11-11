@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using System.ComponentModel;
 
+using ExpressionTreeEngine;
+
 namespace SpreadsheetEngine
 {
     public class Spreadsheet : INotifyPropertyChanged
@@ -31,6 +33,7 @@ namespace SpreadsheetEngine
 
                     //when cell OnpropertyChange it will run spreadsheet  CellPropertyChanged
                     Cells[r, c].PropertyChanged += CellPropertyChanged;
+                    //this means when cell Text change, call spreadsheet CellPropertyChanged(object sender, EventArgs e)
 
 
                 }
@@ -71,7 +74,7 @@ namespace SpreadsheetEngine
             Cell changedCell = (Cell)sender;
             string myValue = Evaluate(changedCell);
             changedCell.Value = myValue;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Cell"));
+            PropertyChanged?.Invoke(changedCell, new PropertyChangedEventArgs("Cell"));
 
         }
         private string Evaluate(Cell cell)
@@ -84,28 +87,44 @@ namespace SpreadsheetEngine
             //if the text starts with an equal sign
             if (text[0] == '=')
             {
-                //if you see the text in the cell starting with ‘=’ then assume the remaining part is the name of the cell we need to copy a value from
-                //get the name of the cell
-                string cellName = text.Substring(1);
-                string expression = text.Substring(1);
-                //split the expression into tokens
-                string[] tokens = expression.Split(' ');
-                //if just one token
-                if (tokens.Length == 1)
+                //remove the equal sign
+                string expression = text.Substring(1) + "+0";
+                ExpressionTree expressionTree = new ExpressionTree(expression);
+
+                //use GetVariableNames to set variables
+                string[] variables = expressionTree.GetVariableNames();
+                foreach (string variable in variables)
                 {
-                    //get the cell
-                    Cell c = GetCell(cellName);
-                    //if the cell is null, return empty string
-                    if (c == null)
+                    //get the row and column index of the variable
+                    int column = variable[0] - 'A';
+                    int row = int.Parse(variable.Substring(1)) - 1;
+                    //get the value of the cell
+                    string value = Cells[row, column].Value;
+                    //if the value is empty, return empty string
+                    if (value == "")
                         return "";
-                    //if the cell is not null, return the value of the cell
-                    return c.Value;
+                    //set the variable in the expression tree
+                    expressionTree.SetVariable(variable, double.Parse(value));
+                    //add event handler to the cell for ref
+
+                    //HW7 part3 cell reference
+                    //Cells[row,column] is the variable cell, and cell is the cell that use that Cells[row,column] as a variable
+                    //when Cell[row,column] change property, it will also trigger RefPropertychanged
+                    Cells[row, column].PropertyChanged += cell.OnRefPropertyChanged;
+
                 }
-                return cellName;
-  
+
+
+
+                return expressionTree.Evaluate().ToString();
+                
+
+
+
 
             }
             else return cell.Text;
+
 
 
         }
@@ -125,6 +144,8 @@ namespace SpreadsheetEngine
             //return the cell
             return Cells[rowIndex, columnIndex];
         }
+
+        
 
 
 

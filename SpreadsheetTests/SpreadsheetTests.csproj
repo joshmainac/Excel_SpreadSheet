@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExpressionTreeEngine\ExpressionTreeEngine.csproj" />
+    <ProjectReference Include="..\SpreadsheetEngine\SpreadsheetEngine.csproj" />
   </ItemGroup>
 
 </Project>

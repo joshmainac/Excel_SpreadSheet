@@ -13,6 +13,9 @@ namespace ExpressionTreeEngine
             this.Operator = '/';
         }
 
+        public override ushort Precedence { get; set; } = 2;
+
+
 
         public override double Evaluate()
         {

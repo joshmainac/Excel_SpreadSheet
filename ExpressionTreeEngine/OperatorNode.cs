@@ -25,6 +25,10 @@ namespace ExpressionTreeEngine
         public Node Left { get; set; }
         public Node Right { get; set; }
 
+        public abstract ushort Precedence { get; set; }
+
+
+
         public abstract override double Evaluate();
     }
 }

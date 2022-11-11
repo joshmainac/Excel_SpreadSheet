@@ -33,6 +33,7 @@ namespace SpreadsheetEngine
 
                     //when cell OnpropertyChange it will run spreadsheet  CellPropertyChanged
                     Cells[r, c].PropertyChanged += CellPropertyChanged;
+                    //this means when cell Text change, call spreadsheet CellPropertyChanged(object sender, EventArgs e)
 
 
                 }
@@ -104,6 +105,13 @@ namespace SpreadsheetEngine
                         return "";
                     //set the variable in the expression tree
                     expressionTree.SetVariable(variable, double.Parse(value));
+                    //add event handler to the cell for ref
+
+                    //HW7 part3 cell reference
+                    //Cells[row,column] is the variable cell, and cell is the cell that use that Cells[row,column] as a variable
+                    //when Cell[row,column] change property, it will also trigger RefPropertychanged
+                    Cells[row, column].PropertyChanged += cell.OnRefPropertyChanged;
+
                 }
 
 
@@ -136,6 +144,8 @@ namespace SpreadsheetEngine
             //return the cell
             return Cells[rowIndex, columnIndex];
         }
+
+        
 
 
 

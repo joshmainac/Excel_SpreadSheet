@@ -118,8 +118,25 @@ namespace Spreadsheet_Joshua_Long
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            //update spreadsheet Cells
+            //update spreadsheet Cells from dataGridView1
             spreadsheet.GetCell(e.RowIndex, e.ColumnIndex).Text = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+
+
+
+            // Make sure that when a cell is changed all other cells that reference that cell in their formulas get
+            // updated. This means that the cell Text property change is not the only circumstance where you need to
+            // update its value.
+            //spreadsheet.GetCell(e.RowIndex, e.ColumnIndex).PropertyChanged += CellPropertyChanged;
+            
+            
+
+
+
+
+
+
+
+
             //set the excel grid to the cell value
             dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = spreadsheet.GetCell(e.RowIndex, e.ColumnIndex).Value;
 

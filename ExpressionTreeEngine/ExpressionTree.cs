@@ -120,6 +120,14 @@ namespace ExpressionTreeEngine
                     else
                     {
                         //if the precedence of the operator on the top of the operator stack is greater than or equal to the precedence of the current operator
+
+
+                        //create operatprNodefactory class
+                        //OperateNodeFactory factory = new OperateNodeFactory();
+                        //create a new operator node
+                        //ushort presidence2  = factory.CreateOperatorNode(s[i]).Precedence;
+
+
                         ushort presidence1;
                         ushort presidence2 = OperateNodeFactory.CreateOperatorNode(s[i]).Precedence;
                         if (operatorStack.Peek() == '(' || operatorStack.Peek() == ')')

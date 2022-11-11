@@ -51,16 +51,13 @@ namespace Spreadsheet_Joshua_Long
 
         }
 
+
+
         private void UpdateGrid(object sender, EventArgs e)
         {
- 
-            for (int i = 0; i < 50; i++)
-            {
-                for (int j = 0; j < 26; j++)
-                {
-                    dataGridView1.Rows[i].Cells[j].Value = spreadsheet.GetCell(i,j).Value;
-                }
-            }
+
+            Cell changedCell = (Cell)sender;
+            dataGridView1.Rows[changedCell.RowIndex].Cells[changedCell.ColumnIndex].Value = changedCell.Value;
 
         }
 

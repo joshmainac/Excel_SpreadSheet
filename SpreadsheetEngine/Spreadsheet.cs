@@ -74,7 +74,7 @@ namespace SpreadsheetEngine
             Cell changedCell = (Cell)sender;
             string myValue = Evaluate(changedCell);
             changedCell.Value = myValue;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Cell"));
+            PropertyChanged?.Invoke(changedCell, new PropertyChangedEventArgs("Cell"));
 
         }
         private string Evaluate(Cell cell)

@@ -108,7 +108,6 @@ namespace SpreadsheetTests
             public void Testvariable1()
             {
                 ExpressionTree tree = new ExpressionTree("A+B");
-                Assert.That(tree.Evaluate() == 0);
                 tree.SetVariable("A", 3);
                 tree.SetVariable("B", 6);
                 Assert.That(tree.Evaluate() == 9);
@@ -118,10 +117,10 @@ namespace SpreadsheetTests
             public void Testvariable22()
             {
                 ExpressionTree tree3 = new ExpressionTree("A1+B2");
-                Assert.That(tree3.Evaluate() == 0);
-                //tree3.SetVariable("A1", 4);
-                //tree3.SetVariable("B2", 6);
-                //Assert.That(tree3.Evaluate() == 10);
+                //Assert.That(tree3.Evaluate() == 0);
+                tree3.SetVariable("A1", 4);
+                tree3.SetVariable("B2", 6);
+                Assert.That(tree3.Evaluate() == 10);
 
             }
 

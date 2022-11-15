@@ -15,6 +15,9 @@ namespace Spreadsheet_Joshua_Long
     public partial class Form1 : Form
     {
         private Spreadsheet spreadsheet;
+        //HW8
+        public System.Drawing.Color BackColor { get; set; }
+        ///
         public Form1()
         {
             InitializeComponent();
@@ -48,6 +51,17 @@ namespace Spreadsheet_Joshua_Long
                 dataGridView1.Rows.Add();
                 dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
             }
+
+            BackColor = Color.Red;
+            //dataGridView1.BackgroundColor = BackColor;
+            //dataGridView1.Rows[0].Cells[0].Color = BackColor;
+            //dataGridView1.DefaultCellStyle.BackColor = BackColor;
+            dataGridView1.Rows[0].DefaultCellStyle.BackColor = Color.Red;
+
+            //dataGridView1.RowsDefaultCellStyle.BackColor = Color.Green;
+
+
+
 
         }
 

@@ -56,9 +56,19 @@ namespace Spreadsheet_Joshua_Long
             //dataGridView1.BackgroundColor = BackColor;
             //dataGridView1.Rows[0].Cells[0].Color = BackColor;
             //dataGridView1.DefaultCellStyle.BackColor = BackColor;
-            //dataGridView1.Rows[0].Cells[2].DefaultCellStyle.BackColor = Color.Red;
+
+
+            //dataGridView1.Rows[0].DefaultCellStyle.BackColor = Color.Red;
+            //dataGridView1.Cells[0].DefaultCellStyle.BackColor = Color.Red;
+            dataGridView1.Rows[0].Cells[0].Style.BackColor = Color.Red;
+            
 
             //dataGridView1.RowsDefaultCellStyle.BackColor = Color.Green;
+            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.Red;
+            dataGridView1.DefaultCellStyle.SelectionForeColor = Color.Blue;
+
+            dataGridView1.RowsDefaultCellStyle.BackColor = Color.LightGray;
+            dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.DarkGray;
 
 
 
@@ -150,6 +160,30 @@ namespace Spreadsheet_Joshua_Long
 
             //set the excel grid to the cell value
             dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = spreadsheet.GetCell(e.RowIndex, e.ColumnIndex).Value;
+
+
+        }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows[0].Cells[1].Style.BackColor = Color.Blue;
+
+        }
+
+        private void changeBackgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //dataGridView1.Rows[0].Cells[2].Style.BackColor = Color.Blue;
+            ColorDialog MyDialog = new ColorDialog();
+            // Keeps the user from selecting a custom color.
+            MyDialog.AllowFullOpen = false;
+            // Allows the user to get help. (The default is false.)
+            MyDialog.ShowHelp = true;
+            // Sets the initial color select to the current text color.
+            MyDialog.Color = dataGridView1.Rows[0].Cells[2].Style.BackColor;
+
+            // Update the text box color if the user clicks OK 
+            if (MyDialog.ShowDialog() == DialogResult.OK)
+                dataGridView1.Rows[0].Cells[2].Style.BackColor = MyDialog.Color;
 
 
         }

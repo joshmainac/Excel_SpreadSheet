@@ -55,29 +55,7 @@ namespace ExpressionTreeEngine
             }
 
         }
-        public static OperatorNode CreateOperatorNode2(char op)
-        {
 
-            Dictionary<char, OperatorNode> OperatorDict = new Dictionary<char, OperatorNode>()
-            {
-                {'+', new AddNode()},
-                {'-', new SubNode()},
-                {'*', new MulNode()},
-                {'/', new DivNode()}
-
-            };
-            if (OperatorDict.ContainsKey(op))
-            {
-                return OperatorDict[op];
-            }
-            else
-            {
-                throw new ArgumentException("Invalid operator");
-                //return null;
-            }
-
-
-        }
 
         public OperatorNode CreateOperatorNode(char op)
         {

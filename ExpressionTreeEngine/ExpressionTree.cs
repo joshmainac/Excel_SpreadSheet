@@ -123,14 +123,7 @@ namespace ExpressionTreeEngine
                         //if the precedence of the operator on the top of the operator stack is greater than or equal to the precedence of the current operator
 
 
-                        //create operatprNodefactory class
-                        
-                        //create a new operator node
-                        //ushort presidence2  = factory.CreateOperatorNode(s[i]).Precedence;
-
-
                         ushort presidence1;
-                        //ushort presidence2 = OperateNodeFactory.CreateOperatorNode(s[i]).Precedence;
                         ushort presidence2 = factory.CreateOperatorNode(s[i]).Precedence;
 
                         if (operatorStack.Peek() == '(' || operatorStack.Peek() == ')')
@@ -139,7 +132,6 @@ namespace ExpressionTreeEngine
                         }
                         else
                         {
-                            //presidence1 = OperateNodeFactory.CreateOperatorNode(operatorStack.Peek()).Precedence;
                             presidence1 = factory.CreateOperatorNode(operatorStack.Peek()).Precedence;
                         }
 
@@ -227,8 +219,6 @@ namespace ExpressionTreeEngine
                 else
                 {
                     //create an operator node
-                    //OperatorNode operatorNode = OperateNodeFactory.CreateOperatorNode(tokens[i][0]);
-                    //OperatorNode operatorNode = OperatorNodeFactory.CreateOperatorNode2(tokens[i][0]);
                     OperatorNode operatorNode = factory.CreateOperatorNode(tokens[i][0]);
 
                     //pop the right node from the stack

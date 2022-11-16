@@ -56,7 +56,7 @@ namespace Spreadsheet_Joshua_Long
             //dataGridView1.BackgroundColor = BackColor;
             //dataGridView1.Rows[0].Cells[0].Color = BackColor;
             //dataGridView1.DefaultCellStyle.BackColor = BackColor;
-            dataGridView1.Rows[0].DefaultCellStyle.BackColor = Color.Red;
+            //dataGridView1.Rows[0].Cells[2].DefaultCellStyle.BackColor = Color.Red;
 
             //dataGridView1.RowsDefaultCellStyle.BackColor = Color.Green;
 

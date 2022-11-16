@@ -52,23 +52,7 @@ namespace Spreadsheet_Joshua_Long
                 dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
             }
 
-            BackColor = Color.Red;
-            //dataGridView1.BackgroundColor = BackColor;
-            //dataGridView1.Rows[0].Cells[0].Color = BackColor;
-            //dataGridView1.DefaultCellStyle.BackColor = BackColor;
-
-
-            //dataGridView1.Rows[0].DefaultCellStyle.BackColor = Color.Red;
-            //dataGridView1.Cells[0].DefaultCellStyle.BackColor = Color.Red;
-            dataGridView1.Rows[0].Cells[0].Style.BackColor = Color.Red;
-            
-
-            //dataGridView1.RowsDefaultCellStyle.BackColor = Color.Green;
-            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.Red;
-            dataGridView1.DefaultCellStyle.SelectionForeColor = Color.Blue;
-
-            dataGridView1.RowsDefaultCellStyle.BackColor = Color.LightGray;
-            dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.DarkGray;
+   
 
 
 
@@ -81,7 +65,14 @@ namespace Spreadsheet_Joshua_Long
         {
 
             Cell changedCell = (Cell)sender;
+            //update value
             dataGridView1.Rows[changedCell.RowIndex].Cells[changedCell.ColumnIndex].Value = changedCell.Value;
+
+            //update color
+            dataGridView1.Rows[changedCell.RowIndex].Cells[changedCell.ColumnIndex].Style.BackColor = Color.FromArgb((int)changedCell.BGColor);
+
+
+
 
         }
 
@@ -167,7 +158,7 @@ namespace Spreadsheet_Joshua_Long
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows[0].Cells[1].Style.BackColor = Color.Blue;
-
+            //dataGridView1.celec
         }
 
         private void changeBackgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -183,7 +174,25 @@ namespace Spreadsheet_Joshua_Long
 
             // Update the text box color if the user clicks OK 
             if (MyDialog.ShowDialog() == DialogResult.OK)
-                dataGridView1.Rows[0].Cells[2].Style.BackColor = MyDialog.Color;
+            {
+                uint i = (uint)MyDialog.Color.ToArgb();
+                //loop for all selected cells
+                foreach (DataGridViewCell cell in dataGridView1.SelectedCells)
+                {
+                    
+                    spreadsheet.GetCell(cell.RowIndex, cell.ColumnIndex).BGColor = i;
+
+
+
+
+                }
+
+            }
+       
+
+
+
+               
 
 
         }

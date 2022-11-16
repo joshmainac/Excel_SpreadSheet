@@ -30,6 +30,7 @@ namespace SpreadsheetEngine
                     Cells[r, c].ColumnIndex = c;
                     Cells[r, c].RowIndex = r;
                     Cells[r, c].Text = "";
+                    Cells[r, c].BGColor = 0xFFFFFFFF;
 
                     //when cell OnpropertyChange it will run spreadsheet  CellPropertyChanged
                     Cells[r, c].PropertyChanged += CellPropertyChanged;

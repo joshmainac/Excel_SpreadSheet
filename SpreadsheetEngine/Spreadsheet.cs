@@ -19,6 +19,10 @@ namespace SpreadsheetEngine
 
             //create a 2D array of cells
             this.Cells = new Cell[rows, columns];
+            //initialize the undos
+            this.Undos = new Stack<UndoRedoCollection>();
+            this.Redos = new Stack<UndoRedoCollection>();
+
             //loop through the rows
             for (int r = 0; r < rows; r++)
             {
@@ -46,6 +50,11 @@ namespace SpreadsheetEngine
         //public event PropertyChangedEventHandler PropertyChanged;
         //add a 2D array of Cell objects
         private Cell[,] Cells;
+
+        //undo redo stack
+         private Stack<UndoRedoCollection> Undos;
+         private Stack<UndoRedoCollection> Redos;
+
     
 
 
@@ -146,7 +155,39 @@ namespace SpreadsheetEngine
             return Cells[rowIndex, columnIndex];
         }
 
+
+        public void AddUndo(Cell undoRedoCell)
+        {
+            //Cell mycell = new undoRedoCell
+            //make new cell mycell and copy the value of undoRedoCell
+            Cell mycell = new TextCell();
+            mycell.ColumnIndex = undoRedoCell.ColumnIndex;
+            mycell.RowIndex = undoRedoCell.RowIndex;
+            mycell.Text = undoRedoCell.Text;
+
+
+
+            UndoRedoCollection mycollection = new UndoRedoCollection(mycell);
+            Undos.Push(mycollection);
+        }
         
+
+        public void ExecuteUndo()
+        {
+            if (Undos.Count > 0)
+            {
+                UndoRedoCollection undo = Undos.Pop();
+                Redos.Push(undo);
+                undo.Evaluate(ref this.Cells[undo.Oldcell.RowIndex, undo.Oldcell.ColumnIndex]);
+            }
+            else
+            {
+                throw new Exception("No more undo");
+            }
+
+            
+
+        }
 
 
 

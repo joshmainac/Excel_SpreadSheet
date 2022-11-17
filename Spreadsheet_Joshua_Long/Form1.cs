@@ -130,6 +130,9 @@ namespace Spreadsheet_Joshua_Long
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            //add previous cell to undo stack
+            spreadsheet.AddUndo(spreadsheet.GetCell(e.RowIndex, e.ColumnIndex));
+            
             //update spreadsheet Cells from dataGridView1
             spreadsheet.GetCell(e.RowIndex, e.ColumnIndex).Text = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
 
@@ -195,6 +198,11 @@ namespace Spreadsheet_Joshua_Long
                
 
 
+        }
+
+        private void undoTextChangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            spreadsheet.ExecuteUndo();
         }
     }
 }

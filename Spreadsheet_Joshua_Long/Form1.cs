@@ -24,6 +24,8 @@ namespace Spreadsheet_Joshua_Long
             InitializeDataGrid();
             spreadsheet = new Spreadsheet(50, 26);
             spreadsheet.PropertyChanged += UpdateGrid;
+            this.undoTextChangeToolStripMenuItem.Enabled = false;
+            this.redoTextChangeToolStripMenuItem.Enabled = false;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -132,9 +134,13 @@ namespace Spreadsheet_Joshua_Long
         {
             //add previous cell to undo stack
             spreadsheet.AddUndo(spreadsheet.GetCell(e.RowIndex, e.ColumnIndex));
-            
-            //update spreadsheet Cells from dataGridView1
+            this.undoTextChangeToolStripMenuItem.Enabled = true;
+            this.undoTextChangeToolStripMenuItem.Text = "Undo" + spreadsheet.PeekUndo();
+
+
+            //update spreadsheet Cells from dataGridView1 changing formula
             spreadsheet.GetCell(e.RowIndex, e.ColumnIndex).Text = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+
 
 
 
@@ -142,8 +148,8 @@ namespace Spreadsheet_Joshua_Long
             // updated. This means that the cell Text property change is not the only circumstance where you need to
             // update its value.
             //spreadsheet.GetCell(e.RowIndex, e.ColumnIndex).PropertyChanged += CellPropertyChanged;
-            
-            
+
+
 
 
 
@@ -203,6 +209,21 @@ namespace Spreadsheet_Joshua_Long
         private void undoTextChangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             spreadsheet.ExecuteUndo();
+            if (spreadsheet.CountUndo() == 0)
+            {
+                this.undoTextChangeToolStripMenuItem.Enabled = false;
+            }
+            this.redoTextChangeToolStripMenuItem.Enabled = true;
+        }
+
+        private void redoTextChangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            spreadsheet.ExecuteRedo();
+            if (spreadsheet.CountRedo() == 0)
+            {
+                this.redoTextChangeToolStripMenuItem.Enabled = false;
+            }
+            this.undoTextChangeToolStripMenuItem.Enabled = true;
         }
     }
 }

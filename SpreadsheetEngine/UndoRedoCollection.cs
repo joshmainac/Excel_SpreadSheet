@@ -8,6 +8,12 @@ namespace SpreadsheetEngine
 {
     class UndoRedoCollection
     {
+        public string PropertyName
+        {
+            get;
+            set;
+        }
+
         Cell oldcell;
         //get row and column from oldcell
         int row;

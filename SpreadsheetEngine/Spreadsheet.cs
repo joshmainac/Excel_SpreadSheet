@@ -15,6 +15,8 @@ namespace SpreadsheetEngine
      
         public Spreadsheet(int rows, int columns)
         {
+
+            
       
 
             //create a 2D array of cells
@@ -168,17 +170,54 @@ namespace SpreadsheetEngine
 
 
             UndoRedoCollection mycollection = new UndoRedoCollection(mycell);
-            Undos.Push(mycollection);
+            mycollection.PropertyName = "Text Change";
+            this.Undos.Push(mycollection);
         }
-        
+
+        public string PeekUndo()
+        {
+            return this.Undos.Peek().PropertyName;
+        }
+
+        public int CountUndo()
+        {
+            return this.Undos.Count;
+        }
+
+        public int CountRedo()
+        {
+            return this.Redos.Count;
+        }
+
+
+
+        public void AddRedo(Cell undoRedoCell)
+        {
+            //Cell mycell = new undoRedoCell
+            //make new cell mycell and copy the value of undoRedoCell
+            Cell mycell = new TextCell();
+            mycell.ColumnIndex = undoRedoCell.ColumnIndex;
+            mycell.RowIndex = undoRedoCell.RowIndex;
+            mycell.Text = undoRedoCell.Text;
+
+
+
+            UndoRedoCollection mycollection = new UndoRedoCollection(mycell);
+            this.Redos.Push(mycollection);
+        }
+
 
         public void ExecuteUndo()
         {
             if (Undos.Count > 0)
             {
+                //pop one value from Undo(old cell)
                 UndoRedoCollection undo = Undos.Pop();
-                Redos.Push(undo);
-                undo.Evaluate(ref this.Cells[undo.Oldcell.RowIndex, undo.Oldcell.ColumnIndex]);
+                //save currentcell in Redo
+                Cell CurrentCell = this.GetCell(undo.Oldcell.RowIndex, undo.Oldcell.ColumnIndex);
+                AddRedo(CurrentCell);
+                //undo -> CurrentCell, update currentcell to undo(oldcell)
+                undo.Evaluate(ref CurrentCell);
             }
             else
             {
@@ -187,6 +226,22 @@ namespace SpreadsheetEngine
 
             
 
+        }
+
+
+        public void ExecuteRedo()
+        {
+            if (Redos.Count > 0)
+            {
+                UndoRedoCollection redo = Redos.Pop();
+                Cell CurrentCell = this.Cells[redo.Oldcell.RowIndex, redo.Oldcell.ColumnIndex];
+                AddUndo(CurrentCell);
+                redo.Evaluate(ref CurrentCell);
+            }
+            else
+            {
+                throw new Exception("No more redo");
+            }
         }
 
 

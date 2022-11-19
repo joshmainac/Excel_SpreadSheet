@@ -14,6 +14,7 @@ namespace ExpressionTreeEngine
 
         public OperateNodeFactory()
         {
+            operators.Clear();
             TraverseAvailableOperators((op, type) => operators.Add(op, type));
             
         }
@@ -35,7 +36,12 @@ namespace ExpressionTreeEngine
                     if (operatorField != null)
                     {
                         // Get the character of the Operator
-                        object value = operatorField.GetValue(type);
+                        //object value = operatorField.GetValue(type);
+                        //use for not static
+                        //object value = operatorField.GetValue(Activator.CreateInstance(type, new ConstantNode(0), new ConstantNode(0)));
+                        object value = operatorField.GetValue(Activator.CreateInstance(type));
+
+
                         if (value is char)
                         {
                             char operatorSymbol = (char)value;
@@ -49,31 +55,9 @@ namespace ExpressionTreeEngine
             }
 
         }
-        public static OperatorNode CreateOperatorNode(char op)
-        {
-
-            Dictionary<char, OperatorNode> OperatorDict = new Dictionary<char, OperatorNode>()
-            {
-                {'+', new AddNode()},
-                {'-', new SubNode()},
-                {'*', new MulNode()},
-                {'/', new DivNode()}
-
-            };
-            if (OperatorDict.ContainsKey(op))
-            {
-                return OperatorDict[op];
-            }
-            else
-            {
-                throw new ArgumentException("Invalid operator");
-                //return null;
-            }
 
 
-        }
-
-        public static OperatorNode CreateOperatorNode2(char op)
+        public OperatorNode CreateOperatorNode(char op)
         {
             if (operators.ContainsKey(op))
             {

@@ -15,10 +15,16 @@ namespace SpreadsheetEngine
      
         public Spreadsheet(int rows, int columns)
         {
+
+            
       
 
             //create a 2D array of cells
             this.Cells = new Cell[rows, columns];
+            //initialize the undos
+            this.Undos = new Stack<UndoRedoCollection>();
+            this.Redos = new Stack<UndoRedoCollection>();
+
             //loop through the rows
             for (int r = 0; r < rows; r++)
             {
@@ -30,6 +36,7 @@ namespace SpreadsheetEngine
                     Cells[r, c].ColumnIndex = c;
                     Cells[r, c].RowIndex = r;
                     Cells[r, c].Text = "";
+                    Cells[r, c].BGColor = 0xFFFFFFFF;
 
                     //when cell OnpropertyChange it will run spreadsheet  CellPropertyChanged
                     Cells[r, c].PropertyChanged += CellPropertyChanged;
@@ -45,6 +52,11 @@ namespace SpreadsheetEngine
         //public event PropertyChangedEventHandler PropertyChanged;
         //add a 2D array of Cell objects
         private Cell[,] Cells;
+
+        //undo redo stack
+         private Stack<UndoRedoCollection> Undos;
+         private Stack<UndoRedoCollection> Redos;
+
     
 
 
@@ -145,7 +157,102 @@ namespace SpreadsheetEngine
             return Cells[rowIndex, columnIndex];
         }
 
-        
+        //undo redo frunctions
+        public void AddUndo(Cell undoRedoCell,string propertyname)
+        {
+            //Cell mycell = new undoRedoCell
+            //make new cell mycell and copy the value of undoRedoCell
+            Cell mycell = new TextCell();
+            mycell.ColumnIndex = undoRedoCell.ColumnIndex;
+            mycell.RowIndex = undoRedoCell.RowIndex;
+            mycell.Text = undoRedoCell.Text;
+            mycell.BGColor = undoRedoCell.BGColor;
+
+
+
+            UndoRedoCollection mycollection = new UndoRedoCollection(mycell);
+            mycollection.PropertyName = propertyname;
+            this.Undos.Push(mycollection);
+        }
+
+
+
+
+
+        public void AddRedo(Cell undoRedoCell, string propertyname)
+        {
+            //Cell mycell = new undoRedoCell
+            //make new cell mycell and copy the value of undoRedoCell
+            Cell mycell = new TextCell();
+            mycell.ColumnIndex = undoRedoCell.ColumnIndex;
+            mycell.RowIndex = undoRedoCell.RowIndex;
+            mycell.Text = undoRedoCell.Text;
+            mycell.BGColor = undoRedoCell.BGColor;
+
+
+            UndoRedoCollection mycollection = new UndoRedoCollection(mycell);
+            mycollection.PropertyName = propertyname;
+            this.Redos.Push(mycollection);
+        }
+
+
+        public void ExecuteUndo()
+        {
+            if (Undos.Count > 0)
+            {
+                //pop one value from Undo(old cell)
+                UndoRedoCollection undo = Undos.Pop();
+                //save currentcell in Redo
+                Cell CurrentCell = this.GetCell(undo.Oldcell.RowIndex, undo.Oldcell.ColumnIndex);
+                AddRedo(CurrentCell,undo.PropertyName);
+                //undo -> CurrentCell, update currentcell to undo(oldcell)
+                undo.Evaluate(ref CurrentCell);
+            }
+            else
+            {
+                throw new Exception("No more undo");
+            }
+
+            
+
+        }
+
+
+        public void ExecuteRedo()
+        {
+            if (Redos.Count > 0)
+            {
+                UndoRedoCollection redo = Redos.Pop();
+                Cell CurrentCell = this.Cells[redo.Oldcell.RowIndex, redo.Oldcell.ColumnIndex];
+                AddUndo(CurrentCell, redo.PropertyName);
+                redo.Evaluate(ref CurrentCell);
+            }
+            else
+            {
+                throw new Exception("No more redo");
+            }
+        }
+
+
+        public string PeekUndo()
+        {
+            return this.Undos.Peek().PropertyName;
+        }
+
+        public string PeekRedo()
+        {
+            return this.Redos.Peek().PropertyName;
+        }
+
+        public int CountUndo()
+        {
+            return this.Undos.Count;
+        }
+
+        public int CountRedo()
+        {
+            return this.Redos.Count;
+        }
 
 
 

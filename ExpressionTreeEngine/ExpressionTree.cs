@@ -60,6 +60,7 @@ namespace ExpressionTreeEngine
         //Transform the expression into a postfix order
         private void CreatePostfix(string s)
         {
+            OperateNodeFactory factory = new OperateNodeFactory();
             //use Shunting Yard Algorithm
             Queue<string> postfixQueue = new Queue<string>();
             Stack<char> operatorStack = new Stack<char>();
@@ -122,21 +123,16 @@ namespace ExpressionTreeEngine
                         //if the precedence of the operator on the top of the operator stack is greater than or equal to the precedence of the current operator
 
 
-                        //create operatprNodefactory class
-                        //OperateNodeFactory factory = new OperateNodeFactory();
-                        //create a new operator node
-                        //ushort presidence2  = factory.CreateOperatorNode(s[i]).Precedence;
-
-
                         ushort presidence1;
-                        ushort presidence2 = OperateNodeFactory.CreateOperatorNode(s[i]).Precedence;
+                        ushort presidence2 = factory.CreateOperatorNode(s[i]).Precedence;
+
                         if (operatorStack.Peek() == '(' || operatorStack.Peek() == ')')
                         {
                             presidence1 = 0;
                         }
                         else
                         {
-                            presidence1 = OperateNodeFactory.CreateOperatorNode(operatorStack.Peek()).Precedence;
+                            presidence1 = factory.CreateOperatorNode(operatorStack.Peek()).Precedence;
                         }
 
                         if (presidence1 >= presidence2)
@@ -195,6 +191,7 @@ namespace ExpressionTreeEngine
         //Builed the expression tree from the PostFixExpression 
         private void BuildTree()
         {
+            OperateNodeFactory factory = new OperateNodeFactory();
             //tokenize the PostFixExpression
             string[] tokens = PostFixExpression.Split(' ');
             //create a stack
@@ -222,7 +219,8 @@ namespace ExpressionTreeEngine
                 else
                 {
                     //create an operator node
-                    OperatorNode operatorNode = OperateNodeFactory.CreateOperatorNode(tokens[i][0]);
+                    OperatorNode operatorNode = factory.CreateOperatorNode(tokens[i][0]);
+
                     //pop the right node from the stack
                     Node rightNode = stack.Pop();
                     //pop the left node from the stack

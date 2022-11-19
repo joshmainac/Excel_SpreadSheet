@@ -15,12 +15,17 @@ namespace Spreadsheet_Joshua_Long
     public partial class Form1 : Form
     {
         private Spreadsheet spreadsheet;
+        //HW8
+        public System.Drawing.Color BackColor { get; set; }
+        ///
         public Form1()
         {
             InitializeComponent();
             InitializeDataGrid();
             spreadsheet = new Spreadsheet(50, 26);
             spreadsheet.PropertyChanged += UpdateGrid;
+            this.undoTextChangeToolStripMenuItem.Enabled = false;
+            this.redoTextChangeToolStripMenuItem.Enabled = false;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -49,6 +54,11 @@ namespace Spreadsheet_Joshua_Long
                 dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
             }
 
+   
+
+
+
+
         }
 
 
@@ -57,7 +67,14 @@ namespace Spreadsheet_Joshua_Long
         {
 
             Cell changedCell = (Cell)sender;
+            //update value
             dataGridView1.Rows[changedCell.RowIndex].Cells[changedCell.ColumnIndex].Value = changedCell.Value;
+
+            //update color
+            dataGridView1.Rows[changedCell.RowIndex].Cells[changedCell.ColumnIndex].Style.BackColor = Color.FromArgb((int)changedCell.BGColor);
+
+
+
 
         }
 
@@ -115,8 +132,15 @@ namespace Spreadsheet_Joshua_Long
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            //update spreadsheet Cells from dataGridView1
+            //add previous cell to undo stack
+            spreadsheet.AddUndo(spreadsheet.GetCell(e.RowIndex, e.ColumnIndex),"Text Change");
+            this.undoTextChangeToolStripMenuItem.Enabled = true;
+            this.undoTextChangeToolStripMenuItem.Text = "Undo" + spreadsheet.PeekUndo();
+
+
+            //update spreadsheet Cells from dataGridView1 changing formula
             spreadsheet.GetCell(e.RowIndex, e.ColumnIndex).Text = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+
 
 
 
@@ -124,8 +148,8 @@ namespace Spreadsheet_Joshua_Long
             // updated. This means that the cell Text property change is not the only circumstance where you need to
             // update its value.
             //spreadsheet.GetCell(e.RowIndex, e.ColumnIndex).PropertyChanged += CellPropertyChanged;
-            
-            
+
+
 
 
 
@@ -139,6 +163,108 @@ namespace Spreadsheet_Joshua_Long
 
 
         }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows[0].Cells[1].Style.BackColor = Color.Blue;
+            //dataGridView1.celec
+        }
+
+        private void changeBackgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //dataGridView1.Rows[0].Cells[2].Style.BackColor = Color.Blue;
+            ColorDialog MyDialog = new ColorDialog();
+            // Keeps the user from selecting a custom color.
+            MyDialog.AllowFullOpen = false;
+            // Allows the user to get help. (The default is false.)
+            MyDialog.ShowHelp = true;
+            // Sets the initial color select to the current text color.
+            MyDialog.Color = dataGridView1.Rows[0].Cells[2].Style.BackColor;
+
+            // Update the text box color if the user clicks OK 
+            if (MyDialog.ShowDialog() == DialogResult.OK)
+            {
+                uint i = (uint)MyDialog.Color.ToArgb();
+                //loop for all selected cells
+                foreach (DataGridViewCell cell in dataGridView1.SelectedCells)
+                {
+
+                    //store prev cell to undo before changing its color
+                    Cell mycell = spreadsheet.GetCell(cell.RowIndex, cell.ColumnIndex);
+                    spreadsheet.AddUndo(mycell,"Color Change");
+                    this.undoTextChangeToolStripMenuItem.Enabled = true;
+                    this.undoTextChangeToolStripMenuItem.Text = "Undo" + spreadsheet.PeekUndo();
+                    //
+
+                    spreadsheet.GetCell(cell.RowIndex, cell.ColumnIndex).BGColor = i;
+
+
+
+
+                }
+
+            }
+       
+
+
+
+               
+
+
+        }
+
+        //execute undo
+        private void undoTextChangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            spreadsheet.ExecuteUndo();
+            //decide if to show or hide menu
+            this.redoTextChangeToolStripMenuItem.Enabled = true;
+            if (spreadsheet.CountUndo() == 0)
+            {
+                this.undoTextChangeToolStripMenuItem.Enabled = false;
+            }
+            //update menu text for undo
+            if (spreadsheet.CountUndo() == 0)
+            {
+                this.undoTextChangeToolStripMenuItem.Text = this.undoTextChangeToolStripMenuItem.Text;
+
+            }
+            else
+            {
+                this.undoTextChangeToolStripMenuItem.Text = "Undo" + spreadsheet.PeekUndo();
+            }
+            //update menu text for redo
+            this.redoTextChangeToolStripMenuItem.Text = "Redo" + spreadsheet.PeekRedo();
+
+        }
+
+
+        //execute redo
+        private void redoTextChangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            spreadsheet.ExecuteRedo();
+            //decide if to show or hide menu
+            this.undoTextChangeToolStripMenuItem.Enabled = true;
+            if (spreadsheet.CountRedo() == 0)
+            {
+                this.redoTextChangeToolStripMenuItem.Enabled = false;
+            }
+            //update menu text for redo
+            if (spreadsheet.CountRedo() == 0)
+            {
+                this.redoTextChangeToolStripMenuItem.Text = this.redoTextChangeToolStripMenuItem.Text; 
+
+            }
+            else
+            {
+                this.redoTextChangeToolStripMenuItem.Text = "Redo" + spreadsheet.PeekRedo();
+
+            }
+            //update menu text for redo
+            this.undoTextChangeToolStripMenuItem.Text = "Undo" + spreadsheet.PeekUndo();
+        }
+
+
     }
 }
 

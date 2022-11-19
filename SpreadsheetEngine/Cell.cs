@@ -13,6 +13,7 @@ namespace SpreadsheetEngine
     {
         protected string text;
         protected string value;
+        protected uint bgColor;
         //Add a RowIndex property that is read only
         public int RowIndex { get; internal set; }
         //Add a ColumnIndex property that is read only
@@ -23,6 +24,7 @@ namespace SpreadsheetEngine
             value = "";
             RowIndex = 0;
             ColumnIndex = 0;
+            bgColor = 0xFFFFFFFF;
         }
         
 
@@ -92,6 +94,24 @@ namespace SpreadsheetEngine
             //get the column index
             int colIndex = asciiValue - 65;
             return colIndex;
+        }
+
+        public uint BGColor
+        {
+            get
+            {
+                return this.bgColor;
+
+            }
+            set
+            {
+                if (this.bgColor == value)
+                    return;
+                this.bgColor = value;
+                //fire event when color is changed
+                this.OnPropertyChanged("BGColor");
+
+            }
         }
 
     }

@@ -158,7 +158,7 @@ namespace SpreadsheetEngine
         }
 
 
-        public void AddUndo(Cell undoRedoCell)
+        public void AddUndo(Cell undoRedoCell,string propertyname)
         {
             //Cell mycell = new undoRedoCell
             //make new cell mycell and copy the value of undoRedoCell
@@ -166,32 +166,20 @@ namespace SpreadsheetEngine
             mycell.ColumnIndex = undoRedoCell.ColumnIndex;
             mycell.RowIndex = undoRedoCell.RowIndex;
             mycell.Text = undoRedoCell.Text;
+            mycell.BGColor = undoRedoCell.BGColor;
 
 
 
             UndoRedoCollection mycollection = new UndoRedoCollection(mycell);
-            mycollection.PropertyName = "Text Change";
+            mycollection.PropertyName = propertyname;
             this.Undos.Push(mycollection);
         }
 
-        public string PeekUndo()
-        {
-            return this.Undos.Peek().PropertyName;
-        }
-
-        public int CountUndo()
-        {
-            return this.Undos.Count;
-        }
-
-        public int CountRedo()
-        {
-            return this.Redos.Count;
-        }
 
 
 
-        public void AddRedo(Cell undoRedoCell)
+
+        public void AddRedo(Cell undoRedoCell, string propertyname)
         {
             //Cell mycell = new undoRedoCell
             //make new cell mycell and copy the value of undoRedoCell
@@ -199,10 +187,11 @@ namespace SpreadsheetEngine
             mycell.ColumnIndex = undoRedoCell.ColumnIndex;
             mycell.RowIndex = undoRedoCell.RowIndex;
             mycell.Text = undoRedoCell.Text;
-
+            mycell.BGColor = undoRedoCell.BGColor;
 
 
             UndoRedoCollection mycollection = new UndoRedoCollection(mycell);
+            mycollection.PropertyName = propertyname;
             this.Redos.Push(mycollection);
         }
 
@@ -215,7 +204,7 @@ namespace SpreadsheetEngine
                 UndoRedoCollection undo = Undos.Pop();
                 //save currentcell in Redo
                 Cell CurrentCell = this.GetCell(undo.Oldcell.RowIndex, undo.Oldcell.ColumnIndex);
-                AddRedo(CurrentCell);
+                AddRedo(CurrentCell,undo.PropertyName);
                 //undo -> CurrentCell, update currentcell to undo(oldcell)
                 undo.Evaluate(ref CurrentCell);
             }
@@ -235,13 +224,34 @@ namespace SpreadsheetEngine
             {
                 UndoRedoCollection redo = Redos.Pop();
                 Cell CurrentCell = this.Cells[redo.Oldcell.RowIndex, redo.Oldcell.ColumnIndex];
-                AddUndo(CurrentCell);
+                AddUndo(CurrentCell, redo.PropertyName);
                 redo.Evaluate(ref CurrentCell);
             }
             else
             {
                 throw new Exception("No more redo");
             }
+        }
+
+
+        public string PeekUndo()
+        {
+            return this.Undos.Peek().PropertyName;
+        }
+
+        public string PeekRedo()
+        {
+            return this.Redos.Peek().PropertyName;
+        }
+
+        public int CountUndo()
+        {
+            return this.Undos.Count;
+        }
+
+        public int CountRedo()
+        {
+            return this.Redos.Count;
         }
 
 

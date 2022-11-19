@@ -133,7 +133,7 @@ namespace Spreadsheet_Joshua_Long
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             //add previous cell to undo stack
-            spreadsheet.AddUndo(spreadsheet.GetCell(e.RowIndex, e.ColumnIndex));
+            spreadsheet.AddUndo(spreadsheet.GetCell(e.RowIndex, e.ColumnIndex),"Text Change");
             this.undoTextChangeToolStripMenuItem.Enabled = true;
             this.undoTextChangeToolStripMenuItem.Text = "Undo" + spreadsheet.PeekUndo();
 
@@ -188,7 +188,14 @@ namespace Spreadsheet_Joshua_Long
                 //loop for all selected cells
                 foreach (DataGridViewCell cell in dataGridView1.SelectedCells)
                 {
-                    
+
+                    //store prev cell to undo before changing its color
+                    Cell mycell = spreadsheet.GetCell(cell.RowIndex, cell.ColumnIndex);
+                    spreadsheet.AddUndo(mycell,"Color Change");
+                    this.undoTextChangeToolStripMenuItem.Enabled = true;
+                    this.undoTextChangeToolStripMenuItem.Text = "Undo" + spreadsheet.PeekUndo();
+                    //
+
                     spreadsheet.GetCell(cell.RowIndex, cell.ColumnIndex).BGColor = i;
 
 
@@ -206,25 +213,58 @@ namespace Spreadsheet_Joshua_Long
 
         }
 
+        //execute undo
         private void undoTextChangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             spreadsheet.ExecuteUndo();
+            //decide if to show or hide menu
+            this.redoTextChangeToolStripMenuItem.Enabled = true;
             if (spreadsheet.CountUndo() == 0)
             {
                 this.undoTextChangeToolStripMenuItem.Enabled = false;
             }
-            this.redoTextChangeToolStripMenuItem.Enabled = true;
+            //update menu text for undo
+            if (spreadsheet.CountUndo() == 0)
+            {
+                this.undoTextChangeToolStripMenuItem.Text = this.undoTextChangeToolStripMenuItem.Text;
+
+            }
+            else
+            {
+                this.undoTextChangeToolStripMenuItem.Text = "Undo" + spreadsheet.PeekUndo();
+            }
+            //update menu text for redo
+            this.redoTextChangeToolStripMenuItem.Text = "Redo" + spreadsheet.PeekRedo();
+
         }
 
+
+        //execute redo
         private void redoTextChangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             spreadsheet.ExecuteRedo();
+            //decide if to show or hide menu
+            this.undoTextChangeToolStripMenuItem.Enabled = true;
             if (spreadsheet.CountRedo() == 0)
             {
                 this.redoTextChangeToolStripMenuItem.Enabled = false;
             }
-            this.undoTextChangeToolStripMenuItem.Enabled = true;
+            //update menu text for redo
+            if (spreadsheet.CountRedo() == 0)
+            {
+                this.redoTextChangeToolStripMenuItem.Text = this.redoTextChangeToolStripMenuItem.Text; 
+
+            }
+            else
+            {
+                this.redoTextChangeToolStripMenuItem.Text = "Redo" + spreadsheet.PeekRedo();
+
+            }
+            //update menu text for redo
+            this.undoTextChangeToolStripMenuItem.Text = "Undo" + spreadsheet.PeekUndo();
         }
+
+
     }
 }
 

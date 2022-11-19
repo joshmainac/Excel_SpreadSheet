@@ -130,7 +130,7 @@ namespace SpreadsheetTests
                 spreadsheet = new Spreadsheet(50, 26);
                 Cell mycell = spreadsheet.GetCell(0, 0);
                 mycell.Text = "1";
-                spreadsheet.AddUndo(mycell);
+                spreadsheet.AddUndo(mycell,"Text Change");
                 Assert.That(spreadsheet.CountUndo() == 1);
                 Assert.That(mycell.Text == "1");
                 mycell.Text = "2";

@@ -123,6 +123,25 @@ namespace SpreadsheetTests
                 Assert.That(tree3.Evaluate() == 10);
 
             }
+            [Test]
+            public void TestUndoRedo()
+            {
+                Spreadsheet spreadsheet;
+                spreadsheet = new Spreadsheet(50, 26);
+                Cell mycell = spreadsheet.GetCell(0, 0);
+                mycell.Text = "1";
+                spreadsheet.AddUndo(mycell);
+                Assert.That(spreadsheet.CountUndo() == 1);
+                Assert.That(mycell.Text == "1");
+                mycell.Text = "2";
+                Assert.That(mycell.Text == "2");
+                spreadsheet.ExecuteUndo();
+                Assert.That(mycell.Text == "1");
+                spreadsheet.ExecuteRedo();
+                Assert.That(mycell.Text == "2");
+
+
+            }
 
 
         }

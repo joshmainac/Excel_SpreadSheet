@@ -157,7 +157,7 @@ namespace SpreadsheetEngine
             return Cells[rowIndex, columnIndex];
         }
 
-
+        //undo redo frunctions
         public void AddUndo(Cell undoRedoCell,string propertyname)
         {
             //Cell mycell = new undoRedoCell

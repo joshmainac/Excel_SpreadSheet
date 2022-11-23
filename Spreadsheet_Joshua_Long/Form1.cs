@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using SpreadsheetEngine;
+using System.IO;
+using System.Xml;
 
 namespace Spreadsheet_Joshua_Long
 {
@@ -262,6 +264,36 @@ namespace Spreadsheet_Joshua_Long
             }
             //update menu text for redo
             this.undoTextChangeToolStripMenuItem.Text = "Undo" + spreadsheet.PeekUndo();
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            //openFileDialog1.ShowDialog();
+            //string filename = openFileDialog1.FileName;
+            //StreamReader sr = new StreamReader(filename);
+            //read xml from stream
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.ConformanceLevel = ConformanceLevel.Fragment;
+            settings.IgnoreWhitespace = true;
+            settings.IgnoreComments = true;
+            string aaa = "Spreadsheet_Joshua_Long/file.xml";
+            XmlReader reader = XmlReader.Create("D:\\$Github-2022\\cpts321-hws\\Spreadsheet_Joshua_Long\\file.xml", settings);
+            reader.Read();
+            spreadsheet.Load(reader);
+            //sr.Close();
+
+        }
+
+        private void LoadText(TextReader sr)
+        {
+            
+        }
+
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
 
         //working on HW9 XML

@@ -42,9 +42,11 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoTextChangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redoTextChangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeBackgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.redoTextChangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -152,6 +154,9 @@
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadToolStripMenuItem,
+            this.saveToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             this.fileToolStripMenuItem.Text = "File";
@@ -169,9 +174,16 @@
             // undoTextChangeToolStripMenuItem
             // 
             this.undoTextChangeToolStripMenuItem.Name = "undoTextChangeToolStripMenuItem";
-            this.undoTextChangeToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.undoTextChangeToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.undoTextChangeToolStripMenuItem.Text = "Undo Text change";
             this.undoTextChangeToolStripMenuItem.Click += new System.EventHandler(this.undoTextChangeToolStripMenuItem_Click);
+            // 
+            // redoTextChangeToolStripMenuItem
+            // 
+            this.redoTextChangeToolStripMenuItem.Name = "redoTextChangeToolStripMenuItem";
+            this.redoTextChangeToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.redoTextChangeToolStripMenuItem.Text = "Redo Text Change";
+            this.redoTextChangeToolStripMenuItem.Click += new System.EventHandler(this.redoTextChangeToolStripMenuItem_Click);
             // 
             // cellToolStripMenuItem
             // 
@@ -188,12 +200,19 @@
             this.changeBackgroundColorToolStripMenuItem.Text = "Change Background Color ...";
             this.changeBackgroundColorToolStripMenuItem.Click += new System.EventHandler(this.changeBackgroundColorToolStripMenuItem_Click);
             // 
-            // redoTextChangeToolStripMenuItem
+            // loadToolStripMenuItem
             // 
-            this.redoTextChangeToolStripMenuItem.Name = "redoTextChangeToolStripMenuItem";
-            this.redoTextChangeToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.redoTextChangeToolStripMenuItem.Text = "Redo Text Change";
-            this.redoTextChangeToolStripMenuItem.Click += new System.EventHandler(this.redoTextChangeToolStripMenuItem_Click);
+            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.loadToolStripMenuItem.Text = "load";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveToolStripMenuItem.Text = "save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -234,6 +253,8 @@
         private System.Windows.Forms.ToolStripMenuItem changeBackgroundColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoTextChangeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoTextChangeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
     }
 }
 

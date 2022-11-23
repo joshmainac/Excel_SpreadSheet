@@ -276,28 +276,33 @@ namespace SpreadsheetEngine
 
             while (stream.Name == "cell")
             {
-                //get the name of the cell
+                //get all atributes
                 string name = stream.GetAttribute("name");
-                string name2 = stream.GetAttribute("name2");
-                //get the column index
-                int columnIndex = name[0] - 'A';
-                //get the row index
-                int rowIndex = int.Parse(name.Substring(1)) - 1;
-                //get the text of the cell
                 string text = stream.GetAttribute("text");
-                //get text elementby tagnames
-                //var xmlDoc = stream.responseXML;
-                //text = stream.getElementsByTagName("text");
+                string bgcolor = stream.GetAttribute("bgcolor");
 
+                //read next line
+                stream.Read();
+                while(stream.NodeType != XmlNodeType.EndElement)
+                {
+                    switch (stream.Name)
+                    {
+                        case "text":
+                            text = stream.ReadElementContentAsString();
+                            break;
+                        case "bgcolor":
+                            bgcolor = stream.ReadElementContentAsString();
+                            break;
+                        case "name":
+                            name = stream.ReadElementContentAsString();
+                            break;
+                        default:
+                            break;
+                    }
+                    stream.Read();
+                }
+                
 
-                //get the background color of the cell
-                string color = stream.GetAttribute("bgcolor");
-                //set the text of the cell
-                //Cells[rowIndex, columnIndex].Text = text;
-                //set the background color of the cell
-                //Cells[rowIndex, columnIndex].BGColor = color;
-                //read the next cell
-                stream.ReadToFollowing("cell");
             }
         }
 

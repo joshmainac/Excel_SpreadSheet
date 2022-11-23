@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <spreadsheet rows = "50" columns = "50">
  <cell name="B1">
-  <bgcolor>FF8000</bgcolor>
   <text>=A1+6</text>
+  <bgcolor>FF8000</bgcolor>
  </cell>
 </spreadsheet>

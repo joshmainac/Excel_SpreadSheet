@@ -363,6 +363,32 @@ namespace SpreadsheetEngine
             }
         }
 
+        public void Save(XmlWriter stream)
+        {
+            //write the xml file
+            stream.WriteStartElement("spreadsheet");
+            //write the number of rows and columns
+            stream.WriteAttributeString("rows", this.RowCount.ToString());
+            stream.WriteAttributeString("columns", this.ColumnCount.ToString());
+            //write the cells
+            foreach (Cell cell in this.Cells)
+            {
+                if (cell.Text != "")
+                {
+                    stream.WriteStartElement("cell");
+                    int columnIndex = cell.ColumnIndex + 'A';
+                    int rowIndex = cell.RowIndex + 1;
+                    stream.WriteAttributeString("name", ((char)columnIndex) + rowIndex.ToString());
+                    stream.WriteAttributeString("text", cell.Text);
+                    stream.WriteAttributeString("bgcolor", cell.BGColor.ToString());
+                    stream.WriteEndElement();
+                }
+            }
+            stream.WriteEndElement();
+        }
+
+
+
 
 
 

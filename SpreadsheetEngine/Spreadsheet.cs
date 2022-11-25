@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 using System.ComponentModel;
 
+using System.Drawing;
+
 using ExpressionTreeEngine;
 
 using System.IO;
 using System.Xml;
+
+
 
 namespace SpreadsheetEngine
 {
@@ -268,40 +272,93 @@ namespace SpreadsheetEngine
             //int columns = int.Parse(stream.GetAttribute("columns"));
 
             //read the first cell
-            stream.ReadToFollowing("cell");
+            
             //while there are cells to read
 
             //read every line in XML
+            
 
-
-            while (stream.Name == "cell")
+            while (stream.Name == "cell" || stream.ReadToFollowing("cell"))
             {
                 //get all atributes
                 string name = stream.GetAttribute("name");
                 string text = stream.GetAttribute("text");
                 string bgcolor = stream.GetAttribute("bgcolor");
+                bool flag = true;
 
-                //read next line
-                stream.Read();
-                while(stream.NodeType != XmlNodeType.EndElement)
+                //read next line, until </cell>
+                while (stream.Read() && flag)
                 {
-                    switch (stream.Name)
+                    switch (stream.NodeType)
                     {
-                        case "text":
-                            text = stream.ReadElementContentAsString();
+                        case XmlNodeType.Element:
+                            Console.Write("<{0}>", stream.Name);
+                            switch (stream.Name)
+                            {
+                                case "text":
+                                    stream.Read();
+                                    text = stream.Value;
+                                    break;
+                                case "bgcolor":
+                                    stream.Read();
+                                    bgcolor = stream.Value;
+                                    break;
+                            }
+
                             break;
-                        case "bgcolor":
-                            bgcolor = stream.ReadElementContentAsString();
+                        case XmlNodeType.Text:
+                            Console.Write(stream.Value);
                             break;
-                        case "name":
-                            name = stream.ReadElementContentAsString();
+                        case XmlNodeType.CDATA:
+                            Console.Write("<![CDATA[{0}]]>", stream.Value);
                             break;
-                        default:
+                        case XmlNodeType.ProcessingInstruction:
+                            Console.Write("<?{0} {1}?>", stream.Name, stream.Value);
+                            break;
+                        case XmlNodeType.Comment:
+                            Console.Write("<!--{0}-->", stream.Value);
+                            break;
+                        case XmlNodeType.XmlDeclaration:
+                            Console.Write("<?xml version='1.0'?>");
+                            break;
+                        case XmlNodeType.Document:
+                            break;
+                        case XmlNodeType.DocumentType:
+                            Console.Write("<!DOCTYPE {0} [{1}]", stream.Name, stream.Value);
+                            break;
+                        case XmlNodeType.EntityReference:
+                            Console.Write(stream.Name);
+                            break;
+                        case XmlNodeType.EndElement:
+                            Console.Write("</{0}>", stream.Name);
+                            if (stream.Name =="cell")
+                            {
+                                flag = false;
+                            }
                             break;
                     }
-                    stream.Read();
                 }
-                
+                //load cell to spradsheet
+                //from cell name to get row and column index
+                int columnIndex = name[0] - 'A';
+                int rowIndex = int.Parse(name.Substring(1)) - 1;
+                Cell mycell = GetCell(rowIndex, columnIndex);
+                //Color.FromHex(bgcolor);
+                if (bgcolor != null)
+                {
+                    //use color converter
+                    ColorConverter converter = new ColorConverter();
+                    Color col = (Color)converter.ConvertFromString("#" + bgcolor);
+                    uint i = (uint)col.ToArgb();
+                    mycell.BGColor = i;
+
+                }
+                if (text != null)
+                {
+                    mycell.Text = text;
+
+                }
+
 
             }
         }

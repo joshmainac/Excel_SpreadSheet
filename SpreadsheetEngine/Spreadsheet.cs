@@ -261,10 +261,35 @@ namespace SpreadsheetEngine
             return this.Redos.Count;
         }
 
+        public void Clear()
+        {
+            for (int r = 0; r < RowCount; r++)
+            {
+                //loop through the columns
+                for (int c = 0; c < ColumnCount; c++)
+                {
+                    //create a new cell from abstruct class Cell
+                    Cells[r, c] = new TextCell();
+                    Cells[r, c].ColumnIndex = c;
+                    Cells[r, c].RowIndex = r;
+                    Cells[r, c].Text = "";
+                    Cells[r, c].BGColor = 0xFFFFFFFF;
+
+                    //when cell OnpropertyChange it will run spreadsheet  CellPropertyChanged
+                    Cells[r, c].PropertyChanged += CellPropertyChanged;
+                    //this means when cell Text change, call spreadsheet CellPropertyChanged(object sender, EventArgs e)
+
+
+                }
+            }
+
+        }
+
+
         public void Load(XmlReader stream)
         {
             //clear the spreadsheet
-            //Clear();
+            this.Clear();
             //read the xml file
             stream.ReadToFollowing("spreadsheet");
             //get the number of rows and columns
@@ -287,7 +312,7 @@ namespace SpreadsheetEngine
                 bool flag = true;
 
                 //read next line, until </cell>
-                while (stream.Read() && flag)
+                while (stream.Read() && flag && stream.Name != "cell")
                 {
                     switch (stream.NodeType)
                     {

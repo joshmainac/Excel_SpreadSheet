@@ -268,17 +268,17 @@ namespace Spreadsheet_Joshua_Long
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            //openFileDialog1.ShowDialog();
-            //string filename = openFileDialog1.FileName;
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.ShowDialog();
+            string aaa = openFileDialog1.FileName;
             //StreamReader sr = new StreamReader(filename);
             //read xml from stream
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.ConformanceLevel = ConformanceLevel.Fragment;
             settings.IgnoreWhitespace = true;
             settings.IgnoreComments = true;
-            string aaa = "Spreadsheet_Joshua_Long/file.xml";
-            XmlReader reader = XmlReader.Create("D:\\$Github-2022\\cpts321-hws\\Spreadsheet_Joshua_Long\\file.xml", settings);
+            //string aaa = "Spreadsheet_Joshua_Long/file.xml";
+            XmlReader reader = XmlReader.Create(aaa, settings);
             reader.Read();
             spreadsheet.Load(reader);
             //sr.Close();

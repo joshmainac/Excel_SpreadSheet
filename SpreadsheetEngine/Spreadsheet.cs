@@ -294,15 +294,7 @@ namespace SpreadsheetEngine
             this.Clear();
             //read the xml file
             stream.ReadToFollowing("spreadsheet");
-            //get the number of rows and columns
-            //int rows = int.Parse(stream.GetAttribute("rows"));
-            //int columns = int.Parse(stream.GetAttribute("columns"));
 
-            //read the first cell
-            
-            //while there are cells to read
-
-            //read every line in XML
             
 
             while (stream.ReadToFollowing("cell"))
@@ -405,9 +397,6 @@ namespace SpreadsheetEngine
                     stream.WriteAttributeString("name", ((char)columnIndex) + rowIndex.ToString());
                     stream.WriteAttributeString("text", cell.Text);
 
-                    //ColorConverter converter = new ColorConverter();
-                    //Color col = (Color)converter.ConvertFromString("#" + cell.BGColor.ToString());
-                    //uint i = (uint)col.ToArgb();
                     Color mycolor = Color.FromArgb((int)cell.BGColor);
                     string myHex = ColorTranslator.ToHtml(mycolor);
 

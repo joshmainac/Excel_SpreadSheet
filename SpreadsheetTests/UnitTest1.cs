@@ -2,6 +2,7 @@ using NUnit.Framework;
 using ExpressionTreeEngine;
 using SpreadsheetEngine;
 using System.Xml;
+using System.IO;
 
 namespace SpreadsheetTests
 {
@@ -142,27 +143,10 @@ namespace SpreadsheetTests
 
             }
 
-            [Test]
-            public void TestLoad()
-            {
-                Spreadsheet spreadsheet;
-                spreadsheet = new Spreadsheet(50, 26);
-                XmlReaderSettings settings = new XmlReaderSettings();
-                settings.ConformanceLevel = ConformanceLevel.Fragment;
-                settings.IgnoreWhitespace = true;
-                settings.IgnoreComments = true;
-                string aaa = "Spreadsheet_Joshua_Long/file.xml";
-                XmlReader reader = XmlReader.Create("D:\\$Github-2022\\cpts321-hws\\Spreadsheet_Joshua_Long\\file.xml", settings);
-                reader.Read();
-                spreadsheet.Load(reader);
-                Cell mycell = spreadsheet.GetCell(0, 0);
-                Assert.That(mycell.Value == "6");
 
-
-            }
 
             [Test]
-            public void TestSave()
+            public void TestSaveLoad()
             {
                 //write for xml
                 Spreadsheet spreadsheet;
@@ -176,16 +160,24 @@ namespace SpreadsheetTests
                 settings.IndentChars = "  ";
                 settings.NewLineChars = "\r\n";
                 settings.NewLineHandling = NewLineHandling.Replace;
-                XmlWriter writer = XmlWriter.Create("D:\\$Github-2022\\cpts321-hws\\Spreadsheet_Joshua_Long\\test.xml", settings);
+
+                string workingDirectory = Directory.GetCurrentDirectory();
+                string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+                FileInfo f = new FileInfo(projectDirectory);
+                string fullname = f.FullName;
+
+
+
+                XmlWriter writer = XmlWriter.Create(fullname+ "\\test.xml", settings);
                 spreadsheet.Save(writer);
+                writer.Close();
 
                 //Load to see if value matches
                 XmlReaderSettings settings2 = new XmlReaderSettings();
                 settings2.ConformanceLevel = ConformanceLevel.Fragment;
                 settings2.IgnoreWhitespace = true;
                 settings2.IgnoreComments = true;
-                string aaa = "Spreadsheet_Joshua_Long/file.xml";
-                XmlReader reader = XmlReader.Create("D:\\$Github-2022\\cpts321-hws\\Spreadsheet_Joshua_Long\\test.xml", settings2);
+                XmlReader reader = XmlReader.Create(fullname + "\\test.xml", settings2);
                 reader.Read();
                 spreadsheet.Load(reader);
                 Cell mycell2 = spreadsheet.GetCell(0, 0);

@@ -287,20 +287,12 @@ namespace Spreadsheet_Joshua_Long
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //save dialog
-            //SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            //saveFileDialog1.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
-            //saveFileDialog1.FilterIndex = 2;
-            //saveFileDialog1.RestoreDirectory = true;
 
-            //create some random xml file and save it
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             settings.IndentChars = "  ";
             settings.NewLineChars = "\r\n";
             settings.NewLineHandling = NewLineHandling.Replace;
-            //done settingas
-            //XmlWriter writer = XmlWriter.Create("D:\\$Github-2022\\cpts321-hws\\Spreadsheet_Joshua_Long\\file5.xml", settings);
 
 
 
@@ -324,11 +316,8 @@ namespace Spreadsheet_Joshua_Long
 
 
 
-                    //now write content
-                    //writer.WriteStartDocument();
-                    //writer.WriteStartElement("spreadsheet");
                     spreadsheet.Save(writer);
-                    //writer.WriteEndElement();
+ 
                     writer.Close();
 
 
@@ -350,7 +339,7 @@ namespace Spreadsheet_Joshua_Long
 
         }
 
-        //working on HW9 XML
+      
 
 
     }

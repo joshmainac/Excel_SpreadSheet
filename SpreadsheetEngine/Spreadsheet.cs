@@ -269,7 +269,8 @@ namespace SpreadsheetEngine
                 for (int c = 0; c < ColumnCount; c++)
                 {
                     //create a new cell from abstruct class Cell
-                    Cells[r, c] = new TextCell();
+                    Undos.Clear();
+                    Redos.Clear();
                     Cells[r, c].ColumnIndex = c;
                     Cells[r, c].RowIndex = r;
                     Cells[r, c].Text = "";

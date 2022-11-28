@@ -24,7 +24,7 @@ namespace SpreadsheetEngine
             value = "";
             RowIndex = 0;
             ColumnIndex = 0;
-            bgColor = 0xFFFFFFFF;
+            bgColor = 4294967295;
         }
         
 

@@ -72,7 +72,7 @@ namespace Spreadsheet_Joshua_Long
             //update value
             dataGridView1.Rows[changedCell.RowIndex].Cells[changedCell.ColumnIndex].Value = changedCell.Value;
 
-            //update color
+            //update color,, convert uint to backgroundcolor
             dataGridView1.Rows[changedCell.RowIndex].Cells[changedCell.ColumnIndex].Style.BackColor = Color.FromArgb((int)changedCell.BGColor);
 
 

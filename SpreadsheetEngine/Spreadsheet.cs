@@ -263,14 +263,15 @@ namespace SpreadsheetEngine
 
         public void Clear()
         {
+            Undos.Clear();
+            Redos.Clear();
             for (int r = 0; r < RowCount; r++)
             {
                 //loop through the columns
                 for (int c = 0; c < ColumnCount; c++)
                 {
                     //create a new cell from abstruct class Cell
-                    Undos.Clear();
-                    Redos.Clear();
+
                     Cells[r, c].ColumnIndex = c;
                     Cells[r, c].RowIndex = r;
                     Cells[r, c].Text = "";
@@ -369,7 +370,9 @@ namespace SpreadsheetEngine
                 {
                     //use color converter
                     ColorConverter converter = new ColorConverter();
+                    //convert bgcolor uint to color
                     Color col = (Color)converter.ConvertFromString("#" + bgcolor);
+                    //convert color to argb
                     uint i = (uint)col.ToArgb();
                     mycell.BGColor = i;
 
@@ -401,7 +404,15 @@ namespace SpreadsheetEngine
                     int rowIndex = cell.RowIndex + 1;
                     stream.WriteAttributeString("name", ((char)columnIndex) + rowIndex.ToString());
                     stream.WriteAttributeString("text", cell.Text);
-                    stream.WriteAttributeString("bgcolor", cell.BGColor.ToString());
+
+                    //ColorConverter converter = new ColorConverter();
+                    //Color col = (Color)converter.ConvertFromString("#" + cell.BGColor.ToString());
+                    //uint i = (uint)col.ToArgb();
+                    Color mycolor = Color.FromArgb((int)cell.BGColor);
+                    string myHex = ColorTranslator.ToHtml(mycolor);
+
+
+                    stream.WriteAttributeString("bgcolor", myHex.Substring(1));
                     stream.WriteEndElement();
                 }
             }

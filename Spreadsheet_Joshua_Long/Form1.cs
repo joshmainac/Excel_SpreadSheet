@@ -168,7 +168,6 @@ namespace Spreadsheet_Joshua_Long
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows[0].Cells[1].Style.BackColor = Color.Blue;
             //dataGridView1.celec
         }
 

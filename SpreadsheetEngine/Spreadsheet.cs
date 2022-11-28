@@ -303,66 +303,61 @@ namespace SpreadsheetEngine
             //read every line in XML
             
 
-            while (stream.Name == "cell" || stream.ReadToFollowing("cell"))
+            while (stream.ReadToFollowing("cell"))
             {
                 //get all atributes
                 string name = stream.GetAttribute("name");
                 string text = stream.GetAttribute("text");
                 string bgcolor = stream.GetAttribute("bgcolor");
                 bool flag = true;
+                string TypeName = "";
 
-                //read next line, until </cell>
-                while (stream.Read() && flag && stream.Name != "cell")
+                XmlReader inner = stream.ReadSubtree();
+                while (inner.Read())
                 {
-                    switch (stream.NodeType)
+                    
+                    switch (inner.NodeType)
                     {
                         case XmlNodeType.Element:
-                            Console.Write("<{0}>", stream.Name);
-                            switch (stream.Name)
+                            Console.Write("<{0}>", inner.Name);
+                            switch (inner.Name)
                             {
                                 case "text":
-                                    stream.Read();
-                                    text = stream.Value;
+                                    TypeName = inner.Name;
                                     break;
                                 case "bgcolor":
-                                    stream.Read();
-                                    bgcolor = stream.Value;
+                                    TypeName = inner.Name;
                                     break;
                             }
 
                             break;
                         case XmlNodeType.Text:
-                            Console.Write(stream.Value);
-                            break;
-                        case XmlNodeType.CDATA:
-                            Console.Write("<![CDATA[{0}]]>", stream.Value);
-                            break;
-                        case XmlNodeType.ProcessingInstruction:
-                            Console.Write("<?{0} {1}?>", stream.Name, stream.Value);
-                            break;
-                        case XmlNodeType.Comment:
-                            Console.Write("<!--{0}-->", stream.Value);
-                            break;
-                        case XmlNodeType.XmlDeclaration:
-                            Console.Write("<?xml version='1.0'?>");
-                            break;
-                        case XmlNodeType.Document:
-                            break;
-                        case XmlNodeType.DocumentType:
-                            Console.Write("<!DOCTYPE {0} [{1}]", stream.Name, stream.Value);
-                            break;
-                        case XmlNodeType.EntityReference:
-                            Console.Write(stream.Name);
+                            switch (TypeName)
+                            {
+                                case "text":
+                                    text = inner.Value;
+                                    break;
+                                case "bgcolor":
+                                    bgcolor = inner.Value;
+                                    break;
+                            }
                             break;
                         case XmlNodeType.EndElement:
-                            Console.Write("</{0}>", stream.Name);
-                            if (stream.Name =="cell")
+                            Console.Write("</{0}>", inner.Name);
+                            if (inner.Name =="cell")
                             {
                                 flag = false;
                             }
                             break;
+
+
                     }
+
+
                 }
+
+
+
                 //load cell to spradsheet
                 //from cell name to get row and column index
                 int columnIndex = name[0] - 'A';

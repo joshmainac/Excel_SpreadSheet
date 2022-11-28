@@ -300,13 +300,49 @@ namespace Spreadsheet_Joshua_Long
             settings.NewLineChars = "\r\n";
             settings.NewLineHandling = NewLineHandling.Replace;
             //done settingas
-            XmlWriter writer = XmlWriter.Create("D:\\$Github-2022\\cpts321-hws\\Spreadsheet_Joshua_Long\\file5.xml", settings);
-            //now write content
-            //writer.WriteStartDocument();
-            //writer.WriteStartElement("spreadsheet");
-            spreadsheet.Save(writer);
-            //writer.WriteEndElement();
-            writer.Close();
+            //XmlWriter writer = XmlWriter.Create("D:\\$Github-2022\\cpts321-hws\\Spreadsheet_Joshua_Long\\file5.xml", settings);
+
+
+
+            Stream myStream;
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            //enable to save only xml file
+            saveFileDialog1.Filter = "xml files (*.xml)|*.xml";
+
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+
+
+            
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if ((myStream = saveFileDialog1.OpenFile()) != null)
+                {
+
+                    XmlWriter writer = XmlWriter.Create(myStream, settings);
+
+
+
+                    //now write content
+                    //writer.WriteStartDocument();
+                    //writer.WriteStartElement("spreadsheet");
+                    spreadsheet.Save(writer);
+                    //writer.WriteEndElement();
+                    writer.Close();
+
+
+
+                }
+            }
+
+
+
+
+
+
+
+
 
 
 

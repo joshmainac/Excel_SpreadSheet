@@ -194,8 +194,8 @@ namespace SpreadsheetTests
                 Spreadsheet spreadsheet;
                 spreadsheet = new Spreadsheet(50, 26);
                 Cell mycell = spreadsheet.GetCell(0, 0);
-                //mycell.Text = "1+BadRef";
-                bool res = spreadsheet.IsBadRef();
+                mycell.Text = "=1+BadRef";
+                bool res = spreadsheet.IsBadRef(mycell);
                 Assert.That(res == true);
 
 
@@ -210,9 +210,9 @@ namespace SpreadsheetTests
             {
                 Spreadsheet spreadsheet;
                 spreadsheet = new Spreadsheet(50, 26);
-                //Cell mycell = spreadsheet.GetCell(0, 0);
+                Cell mycell = spreadsheet.GetCell(0, 0);
                 //mycell.Text = "1+BadRef";
-                bool res = spreadsheet.IsSelfRef();
+                bool res = spreadsheet.IsSelfRef(mycell);
                 Assert.That(res == true);
 
 
@@ -225,9 +225,9 @@ namespace SpreadsheetTests
             {
                 Spreadsheet spreadsheet;
                 spreadsheet = new Spreadsheet(50, 26);
-                //Cell mycell = spreadsheet.GetCell(0, 0);
+                Cell mycell = spreadsheet.GetCell(0, 0);
                 //mycell.Text = "1+BadRef";
-                bool res = spreadsheet.IsCircularRef();
+                bool res = spreadsheet.IsCircularRef(mycell);
                 Assert.That(res == true);
 
 

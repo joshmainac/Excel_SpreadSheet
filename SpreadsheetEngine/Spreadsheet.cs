@@ -98,6 +98,27 @@ namespace SpreadsheetEngine
         }
         private string Evaluate(Cell cell)
         {
+
+            if (this.IsBadRef(cell))
+            {
+                return "!(bad reference)";
+
+            }
+
+            if (this.IsSelfRef(cell))
+            {
+                return "aaa";
+
+            }
+
+            if (this.IsCircularRef(cell))
+            {
+                return "aaa";
+
+            }
+
+
+
             //get the text of the cell
             string text = cell.Text;
             //if the text is empty, return empty string
@@ -408,21 +429,108 @@ namespace SpreadsheetEngine
             stream.WriteEndElement();
         }
 
-        public bool IsBadRef()
+        // Check if has BadRef
+        public bool IsBadRef(Cell cell)
         {
+            string text = cell.Text;
+
+            // No ref exist
+            if (text == "")
+                return false;
+
+            // if the text starts with an equal sign
+            if (text[0] == '=')
+            {
+
+                // remove the equal sign
+                string expression = text.Substring(1) + "+0";
+                ExpressionTree expressionTree = new ExpressionTree(expression);
+                string[] variables = expressionTree.GetVariableNames();
+                foreach (string variable in variables)
+                {
+                    //A ~ Z
+                    char column = variable[0];
+                    //1 ~ 50
+                    string temp = variable.Substring(1);
+                    int row;
+                    try
+                    {
+                        row = int.Parse(variable.Substring(1)) - 1;
+                    }
+                    catch (FormatException)
+                    {
+                        //unable to parse row, row is not a number
+                        return true;
+                    }
+
+                    if (char.IsLetter(column) && row >= 0 && row <= 49)
+                    {
+
+                        //not bad ref
+                        continue;
+
+                    }
+                    else
+                    {
+                        //found bad ref
+                        return true;
+                    }
+
+
+
+
+
+
+
+
+                }
+            }
+
+                // No ref exist
+                return false;
+
+        }
+
+        // Check if has SelfRef
+        public bool IsSelfRef(Cell cell)
+        {
+            string text = cell.Text;
+
+            // No ref exist
+            if (text == "")
+                return false;
+
+            // if the text starts with an equal sign
+            if (text[0] == '=')
+            {
+
+                // remove the equal sign
+                string expression = text.Substring(1) + "+0";
+            }
+
+            // No ref exist
             return false;
 
         }
 
-        public bool IsSelfRef()
+        // Check if has CircularRef
+        public bool IsCircularRef(Cell cell)
         {
-            return false;
+            string text = cell.Text;
 
-        }
+            // No ref exist
+            if (text == "")
+                return false;
 
+            // if the text starts with an equal sign
+            if (text[0] == '=')
+            {
 
-        public bool IsCircularRef()
-        {
+                // remove the equal sign
+                string expression = text.Substring(1) + "+0";
+            }
+
+            // No ref exist
             return false;
 
         }

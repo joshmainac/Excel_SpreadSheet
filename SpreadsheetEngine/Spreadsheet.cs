@@ -408,6 +408,25 @@ namespace SpreadsheetEngine
             stream.WriteEndElement();
         }
 
+        public bool IsBadRef()
+        {
+            return false;
+
+        }
+
+        public bool IsSelfRef()
+        {
+            return false;
+
+        }
+
+
+        public bool IsCircularRef()
+        {
+            return false;
+
+        }
+
 
 
 

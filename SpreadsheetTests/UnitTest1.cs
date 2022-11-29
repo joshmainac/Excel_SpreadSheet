@@ -188,6 +188,52 @@ namespace SpreadsheetTests
             }
 
 
+            [Test]
+            public void TestBadRef()
+            {
+                Spreadsheet spreadsheet;
+                spreadsheet = new Spreadsheet(50, 26);
+                Cell mycell = spreadsheet.GetCell(0, 0);
+                //mycell.Text = "1+BadRef";
+                bool res = spreadsheet.IsBadRef();
+                Assert.That(res == true);
+
+
+
+
+
+            }
+
+
+            [Test]
+            public void TestSelfRef()
+            {
+                Spreadsheet spreadsheet;
+                spreadsheet = new Spreadsheet(50, 26);
+                //Cell mycell = spreadsheet.GetCell(0, 0);
+                //mycell.Text = "1+BadRef";
+                bool res = spreadsheet.IsSelfRef();
+                Assert.That(res == true);
+
+
+
+            }
+
+
+            [Test]
+            public void TestCircularRef()
+            {
+                Spreadsheet spreadsheet;
+                spreadsheet = new Spreadsheet(50, 26);
+                //Cell mycell = spreadsheet.GetCell(0, 0);
+                //mycell.Text = "1+BadRef";
+                bool res = spreadsheet.IsCircularRef();
+                Assert.That(res == true);
+
+
+            }
+
+
         }
 
 

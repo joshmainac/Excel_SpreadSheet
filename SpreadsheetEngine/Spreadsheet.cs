@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 using System.ComponentModel;
 
+using System.Drawing;
+
 using ExpressionTreeEngine;
+
+using System.IO;
+using System.Xml;
+
+
 
 namespace SpreadsheetEngine
 {
@@ -253,6 +260,155 @@ namespace SpreadsheetEngine
         {
             return this.Redos.Count;
         }
+
+        public void Clear()
+        {
+            Undos.Clear();
+            Redos.Clear();
+            for (int r = 0; r < RowCount; r++)
+            {
+                //loop through the columns
+                for (int c = 0; c < ColumnCount; c++)
+                {
+                    //create a new cell from abstruct class Cell
+
+                    Cells[r, c].ColumnIndex = c;
+                    Cells[r, c].RowIndex = r;
+                    Cells[r, c].Text = "";
+                    Cells[r, c].BGColor = 0xFFFFFFFF;
+
+                    //when cell OnpropertyChange it will run spreadsheet  CellPropertyChanged
+                    Cells[r, c].PropertyChanged += CellPropertyChanged;
+                    //this means when cell Text change, call spreadsheet CellPropertyChanged(object sender, EventArgs e)
+
+
+                }
+            }
+
+        }
+
+
+        public void Load(XmlReader stream)
+        {
+            //clear the spreadsheet
+            this.Clear();
+            //read the xml file
+            stream.ReadToFollowing("spreadsheet");
+
+            
+
+            while (stream.ReadToFollowing("cell"))
+            {
+                //get all atributes
+                string name = stream.GetAttribute("name");
+                string text = stream.GetAttribute("text");
+                string bgcolor = stream.GetAttribute("bgcolor");
+                bool flag = true;
+                string TypeName = "";
+
+                XmlReader inner = stream.ReadSubtree();
+                while (inner.Read())
+                {
+                    
+                    switch (inner.NodeType)
+                    {
+                        case XmlNodeType.Element:
+                            Console.Write("<{0}>", inner.Name);
+                            switch (inner.Name)
+                            {
+                                case "text":
+                                    TypeName = inner.Name;
+                                    break;
+                                case "bgcolor":
+                                    TypeName = inner.Name;
+                                    break;
+                            }
+
+                            break;
+                        case XmlNodeType.Text:
+                            switch (TypeName)
+                            {
+                                case "text":
+                                    text = inner.Value;
+                                    break;
+                                case "bgcolor":
+                                    bgcolor = inner.Value;
+                                    break;
+                            }
+                            break;
+                        case XmlNodeType.EndElement:
+                            Console.Write("</{0}>", inner.Name);
+                            if (inner.Name =="cell")
+                            {
+                                flag = false;
+                            }
+                            break;
+
+
+                    }
+
+
+                }
+
+
+
+                //load cell to spradsheet
+                //from cell name to get row and column index
+                int columnIndex = name[0] - 'A';
+                int rowIndex = int.Parse(name.Substring(1)) - 1;
+                Cell mycell = GetCell(rowIndex, columnIndex);
+                //Color.FromHex(bgcolor);
+                if (bgcolor != null)
+                {
+                    //use color converter
+                    ColorConverter converter = new ColorConverter();
+                    //convert bgcolor uint to color
+                    Color col = (Color)converter.ConvertFromString("#" + bgcolor);
+                    //convert color to argb
+                    uint i = (uint)col.ToArgb();
+                    mycell.BGColor = i;
+
+                }
+                if (text != null)
+                {
+                    mycell.Text = text;
+
+                }
+
+
+            }
+        }
+
+        public void Save(XmlWriter stream)
+        {
+            //write the xml file
+            stream.WriteStartElement("spreadsheet");
+            //write the number of rows and columns
+            stream.WriteAttributeString("rows", this.RowCount.ToString());
+            stream.WriteAttributeString("columns", this.ColumnCount.ToString());
+            //write the cells
+            foreach (Cell cell in this.Cells)
+            {
+                if (cell.Text != "")
+                {
+                    stream.WriteStartElement("cell");
+                    int columnIndex = cell.ColumnIndex + 'A';
+                    int rowIndex = cell.RowIndex + 1;
+                    stream.WriteAttributeString("name", ((char)columnIndex) + rowIndex.ToString());
+                    stream.WriteAttributeString("text", cell.Text);
+
+                    Color mycolor = Color.FromArgb((int)cell.BGColor);
+                    string myHex = ColorTranslator.ToHtml(mycolor);
+
+
+                    stream.WriteAttributeString("bgcolor", myHex.Substring(1));
+                    stream.WriteEndElement();
+                }
+            }
+            stream.WriteEndElement();
+        }
+
+
 
 
 

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using SpreadsheetEngine;
+using System.IO;
+using System.Xml;
 
 namespace Spreadsheet_Joshua_Long
 {
@@ -70,7 +72,7 @@ namespace Spreadsheet_Joshua_Long
             //update value
             dataGridView1.Rows[changedCell.RowIndex].Cells[changedCell.ColumnIndex].Value = changedCell.Value;
 
-            //update color
+            //update color,, convert uint to backgroundcolor
             dataGridView1.Rows[changedCell.RowIndex].Cells[changedCell.ColumnIndex].Style.BackColor = Color.FromArgb((int)changedCell.BGColor);
 
 
@@ -166,7 +168,6 @@ namespace Spreadsheet_Joshua_Long
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows[0].Cells[1].Style.BackColor = Color.Blue;
             //dataGridView1.celec
         }
 
@@ -263,6 +264,82 @@ namespace Spreadsheet_Joshua_Long
             //update menu text for redo
             this.undoTextChangeToolStripMenuItem.Text = "Undo" + spreadsheet.PeekUndo();
         }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.ShowDialog();
+            string aaa = openFileDialog1.FileName;
+            //StreamReader sr = new StreamReader(filename);
+            //read xml from stream
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.ConformanceLevel = ConformanceLevel.Fragment;
+            settings.IgnoreWhitespace = true;
+            settings.IgnoreComments = true;
+            //string aaa = "Spreadsheet_Joshua_Long/file.xml";
+            XmlReader reader = XmlReader.Create(aaa, settings);
+            reader.Read();
+            spreadsheet.Load(reader);
+            //sr.Close();
+
+        }
+
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = "  ";
+            settings.NewLineChars = "\r\n";
+            settings.NewLineHandling = NewLineHandling.Replace;
+
+
+
+            Stream myStream;
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            //enable to save only xml file
+            saveFileDialog1.Filter = "xml files (*.xml)|*.xml";
+
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+
+
+            
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if ((myStream = saveFileDialog1.OpenFile()) != null)
+                {
+
+                    XmlWriter writer = XmlWriter.Create(myStream, settings);
+
+
+
+                    spreadsheet.Save(writer);
+ 
+                    writer.Close();
+
+
+
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+      
 
 
     }

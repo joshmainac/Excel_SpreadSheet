@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using ExpressionTreeEngine;
 using SpreadsheetEngine;
-
-
+using System.Xml;
+using System.IO;
 
 namespace SpreadsheetTests
 {
@@ -139,6 +139,50 @@ namespace SpreadsheetTests
                 Assert.That(mycell.Text == "1");
                 spreadsheet.ExecuteRedo();
                 Assert.That(mycell.Text == "2");
+
+
+            }
+
+
+
+            [Test]
+            public void TestSaveLoad()
+            {
+                //write for xml
+                Spreadsheet spreadsheet;
+                spreadsheet = new Spreadsheet(50, 26);
+                Cell mycell = spreadsheet.GetCell(0, 0);
+                mycell.Text = "1";
+
+                //Save
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                settings.IndentChars = "  ";
+                settings.NewLineChars = "\r\n";
+                settings.NewLineHandling = NewLineHandling.Replace;
+
+                string workingDirectory = Directory.GetCurrentDirectory();
+                string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+                FileInfo f = new FileInfo(projectDirectory);
+                string fullname = f.FullName;
+
+
+
+                XmlWriter writer = XmlWriter.Create(fullname+ "\\test.xml", settings);
+                spreadsheet.Save(writer);
+                writer.Close();
+
+                //Load to see if value matches
+                XmlReaderSettings settings2 = new XmlReaderSettings();
+                settings2.ConformanceLevel = ConformanceLevel.Fragment;
+                settings2.IgnoreWhitespace = true;
+                settings2.IgnoreComments = true;
+                XmlReader reader = XmlReader.Create(fullname + "\\test.xml", settings2);
+                reader.Read();
+                spreadsheet.Load(reader);
+                Cell mycell2 = spreadsheet.GetCell(0, 0);
+                Assert.That(mycell2.Value == "1");
+
 
 
             }

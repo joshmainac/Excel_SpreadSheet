@@ -107,7 +107,7 @@ namespace SpreadsheetEngine
 
             if (this.IsSelfRef(cell))
             {
-                return "aaa";
+                return "!(self reference)";
 
             }
 
@@ -506,10 +506,30 @@ namespace SpreadsheetEngine
 
                 // remove the equal sign
                 string expression = text.Substring(1) + "+0";
+                ExpressionTree expressionTree = new ExpressionTree(expression);
+                string[] variables = expressionTree.GetVariableNames();
+                foreach (string variable in variables)
+                {
+                    //get row and column from bariable
+                    int columnIndex = variable[0] - 'A';
+                    int rowIndex = int.Parse(variable.Substring(1)) - 1;
+                    //get row and column from cell
+                    int cellColumnIndex = cell.ColumnIndex;
+                    int cellRowIndex = cell.RowIndex;
+                    //if row and column are the same, it is self ref
+                    if (columnIndex == cellColumnIndex && rowIndex == cellRowIndex)
+                    {
+                        return true;
+                    }
+
+
+                }
+                return false;
             }
 
             // No ref exist
             return false;
+
 
         }
 

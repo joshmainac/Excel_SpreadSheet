@@ -211,7 +211,7 @@ namespace SpreadsheetTests
                 Spreadsheet spreadsheet;
                 spreadsheet = new Spreadsheet(50, 26);
                 Cell mycell = spreadsheet.GetCell(0, 0);
-                //mycell.Text = "1+BadRef";
+                mycell.Text = "=1+A1";
                 bool res = spreadsheet.IsSelfRef(mycell);
                 Assert.That(res == true);
 

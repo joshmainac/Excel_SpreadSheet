@@ -92,8 +92,12 @@ namespace SpreadsheetEngine
             
             Cell changedCell = (Cell)sender;
             string myValue = Evaluate(changedCell);
-            changedCell.Value = myValue;
-            PropertyChanged?.Invoke(changedCell, new PropertyChangedEventArgs("Cell"));
+            if (myValue != changedCell.Value)
+            {
+                changedCell.Value = myValue;
+                PropertyChanged?.Invoke(changedCell, new PropertyChangedEventArgs("Cell"));
+            }
+            
 
         }
         private string Evaluate(Cell cell)
@@ -113,7 +117,7 @@ namespace SpreadsheetEngine
 
             if (this.IsCircularRef(cell))
             {
-                return "aaa";
+                return "!(circular reference)";
 
             }
 
@@ -143,6 +147,13 @@ namespace SpreadsheetEngine
                     //if the value is empty, return empty string
                     if (value == "")
                         return "";
+
+                    //For HW10 handle circular reference
+                    if (value == null)
+                    {
+                        value = "0";
+                    }
+
                     //set the variable in the expression tree
                     expressionTree.SetVariable(variable, double.Parse(value));
                     //add event handler to the cell for ref
@@ -533,6 +544,54 @@ namespace SpreadsheetEngine
 
         }
 
+        //use this for Check if has CircularRef
+        public bool IsSelfRef2(Cell cell, string mytext)
+        {
+            string text = mytext;
+
+            // No ref exist
+            if (text == "")
+                return false;
+
+            // if the text starts with an equal sign
+            if (text[0] == '=')
+            {
+
+                // remove the equal sign
+                string expression = text.Substring(1) + "+0";
+                ExpressionTree expressionTree = new ExpressionTree(expression);
+                string[] variables = expressionTree.GetVariableNames();
+                foreach (string variable in variables)
+                {
+                    //get row and column from bariable
+                    int columnIndex = variable[0] - 'A';
+                    int rowIndex = int.Parse(variable.Substring(1)) - 1;
+                    Cell mycell = GetCell(rowIndex, columnIndex);
+                    //get row and column from cell
+                    int cellColumnIndex = cell.ColumnIndex;
+                    int cellRowIndex = cell.RowIndex;
+                    //if row and column are the same, it is self ref
+                    if (columnIndex == cellColumnIndex && rowIndex == cellRowIndex)
+                    {
+                        return true;
+                    }
+
+                    if (IsSelfRef2(cell, mycell.Text))
+                    {
+                        return true;
+                    }
+
+
+                }
+                return false;
+            }
+
+            // No ref exist
+            return false;
+
+
+        }
+
         // Check if has CircularRef
         public bool IsCircularRef(Cell cell)
         {
@@ -548,10 +607,37 @@ namespace SpreadsheetEngine
 
                 // remove the equal sign
                 string expression = text.Substring(1) + "+0";
-            }
+                ExpressionTree expressionTree = new ExpressionTree(expression);
+                string[] variables = expressionTree.GetVariableNames();
+                foreach (string variable in variables)
+                {
+                    //get row and column from bariable
+                    int columnIndex = variable[0] - 'A';
+                    int rowIndex = int.Parse(variable.Substring(1)) - 1;
+                    //get row and column from cell
+                    int cellColumnIndex = cell.ColumnIndex;
+                    int cellRowIndex = cell.RowIndex;
+                    //if row and column are the same, it is self ref
+                    if (columnIndex == cellColumnIndex && rowIndex == cellRowIndex)
+                    {
+                        continue;
+                    }
+                    //get cell from row and column
+                    Cell Refcell = GetCell(rowIndex, columnIndex);
+                    if (Refcell.Value == "!(circular reference)")
+                    {
+                        return true;
+                    }
+                    //check if the cell has circular ref
+                    if (IsSelfRef2(cell, Refcell.Text))
+                    {
+                        return true;
+                    }
+                }
 
-            // No ref exist
+            }
             return false;
+
 
         }
 

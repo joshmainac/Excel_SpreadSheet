@@ -56,10 +56,13 @@ namespace SpreadsheetEngine
 
         public void OnRefPropertyChanged(object sender, EventArgs e)
         {
-                Cell changedCell = (Cell)sender;
 
-                //spreadsheet will catch this, and will compute value and notify Form
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(changedCell.Text));
+            Cell changedCell = (Cell)sender;
+
+            //spreadsheet will catch this, and will compute value and notify Form
+             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(changedCell.Text));
+
+            
 
 
         }

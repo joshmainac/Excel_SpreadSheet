@@ -225,9 +225,14 @@ namespace SpreadsheetTests
             {
                 Spreadsheet spreadsheet;
                 spreadsheet = new Spreadsheet(50, 26);
-                Cell mycell = spreadsheet.GetCell(0, 0);
-                //mycell.Text = "1+BadRef";
-                bool res = spreadsheet.IsCircularRef(mycell);
+                Cell mycell1 = spreadsheet.GetCell(0, 0);
+                Cell mycell2 = spreadsheet.GetCell(0, 1);
+                Cell mycell3 = spreadsheet.GetCell(1, 1);
+                mycell1.Text = "=B1";
+                mycell2.Text = "=B2";
+                mycell3.Text = "=A1";
+
+                bool res = spreadsheet.IsCircularRef(mycell3);
                 Assert.That(res == true);
 
 

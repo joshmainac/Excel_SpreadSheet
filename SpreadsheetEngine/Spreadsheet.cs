@@ -92,12 +92,37 @@ namespace SpreadsheetEngine
             
             Cell changedCell = (Cell)sender;
             string myValue = Evaluate(changedCell);
-            changedCell.Value = myValue;
-            PropertyChanged?.Invoke(changedCell, new PropertyChangedEventArgs("Cell"));
+            if (myValue != changedCell.Value)
+            {
+                changedCell.Value = myValue;
+                PropertyChanged?.Invoke(changedCell, new PropertyChangedEventArgs("Cell"));
+            }
+            
 
         }
         private string Evaluate(Cell cell)
         {
+
+            if (this.IsBadRef(cell))
+            {
+                return "!(bad reference)";
+
+            }
+
+            if (this.IsSelfRef(cell))
+            {
+                return "!(self reference)";
+
+            }
+
+            if (this.IsCircularRef(cell))
+            {
+                return "!(circular reference)";
+
+            }
+
+
+
             //get the text of the cell
             string text = cell.Text;
             //if the text is empty, return empty string
@@ -122,6 +147,13 @@ namespace SpreadsheetEngine
                     //if the value is empty, return empty string
                     if (value == "")
                         return "";
+
+                    //For HW10 handle circular reference
+                    if (value == null)
+                    {
+                        value = "0";
+                    }
+
                     //set the variable in the expression tree
                     expressionTree.SetVariable(variable, double.Parse(value));
                     //add event handler to the cell for ref
@@ -406,6 +438,207 @@ namespace SpreadsheetEngine
                 }
             }
             stream.WriteEndElement();
+        }
+
+        // Check if has BadRef
+        public bool IsBadRef(Cell cell)
+        {
+            string text = cell.Text;
+
+            // No ref exist
+            if (text == "")
+                return false;
+
+            // if the text starts with an equal sign
+            if (text[0] == '=')
+            {
+
+                // remove the equal sign
+                string expression = text.Substring(1) + "+0";
+                ExpressionTree expressionTree = new ExpressionTree(expression);
+                string[] variables = expressionTree.GetVariableNames();
+                foreach (string variable in variables)
+                {
+                    //A ~ Z
+                    char column = variable[0];
+                    //1 ~ 50
+                    string temp = variable.Substring(1);
+                    int row;
+                    try
+                    {
+                        row = int.Parse(variable.Substring(1)) - 1;
+                    }
+                    catch (FormatException)
+                    {
+                        //unable to parse row, row is not a number
+                        return true;
+                    }
+
+                    if (char.IsLetter(column) && row >= 0 && row <= 49)
+                    {
+
+                        //not bad ref
+                        continue;
+
+                    }
+                    else
+                    {
+                        //found bad ref
+                        return true;
+                    }
+
+
+
+
+
+
+
+
+                }
+            }
+
+                // No ref exist
+                return false;
+
+        }
+
+        // Check if has SelfRef
+        public bool IsSelfRef(Cell cell)
+        {
+            string text = cell.Text;
+
+            // No ref exist
+            if (text == "")
+                return false;
+
+            // if the text starts with an equal sign
+            if (text[0] == '=')
+            {
+
+                // remove the equal sign
+                string expression = text.Substring(1) + "+0";
+                ExpressionTree expressionTree = new ExpressionTree(expression);
+                string[] variables = expressionTree.GetVariableNames();
+                foreach (string variable in variables)
+                {
+                    //get row and column from bariable
+                    int columnIndex = variable[0] - 'A';
+                    int rowIndex = int.Parse(variable.Substring(1)) - 1;
+                    //get row and column from cell
+                    int cellColumnIndex = cell.ColumnIndex;
+                    int cellRowIndex = cell.RowIndex;
+                    //if row and column are the same, it is self ref
+                    if (columnIndex == cellColumnIndex && rowIndex == cellRowIndex)
+                    {
+                        return true;
+                    }
+
+
+                }
+                return false;
+            }
+
+            // No ref exist
+            return false;
+
+
+        }
+
+        //use this for Check if has CircularRef
+        public bool IsSelfRef2(Cell cell, string mytext)
+        {
+            string text = mytext;
+
+            // No ref exist
+            if (text == "")
+                return false;
+
+            // if the text starts with an equal sign
+            if (text[0] == '=')
+            {
+
+                // remove the equal sign
+                string expression = text.Substring(1) + "+0";
+                ExpressionTree expressionTree = new ExpressionTree(expression);
+                string[] variables = expressionTree.GetVariableNames();
+                foreach (string variable in variables)
+                {
+                    //get row and column from bariable
+                    int columnIndex = variable[0] - 'A';
+                    int rowIndex = int.Parse(variable.Substring(1)) - 1;
+                    Cell mycell = GetCell(rowIndex, columnIndex);
+                    //get row and column from cell
+                    int cellColumnIndex = cell.ColumnIndex;
+                    int cellRowIndex = cell.RowIndex;
+                    //if row and column are the same, it is self ref
+                    if (columnIndex == cellColumnIndex && rowIndex == cellRowIndex)
+                    {
+                        return true;
+                    }
+
+                    if (IsSelfRef2(cell, mycell.Text))
+                    {
+                        return true;
+                    }
+
+
+                }
+                return false;
+            }
+
+            // No ref exist
+            return false;
+
+
+        }
+
+        // Check if has CircularRef
+        public bool IsCircularRef(Cell cell)
+        {
+            string text = cell.Text;
+
+            // No ref exist
+            if (text == "")
+                return false;
+
+            // if the text starts with an equal sign
+            if (text[0] == '=')
+            {
+
+                // remove the equal sign
+                string expression = text.Substring(1) + "+0";
+                ExpressionTree expressionTree = new ExpressionTree(expression);
+                string[] variables = expressionTree.GetVariableNames();
+                foreach (string variable in variables)
+                {
+                    //get row and column from bariable
+                    int columnIndex = variable[0] - 'A';
+                    int rowIndex = int.Parse(variable.Substring(1)) - 1;
+                    //get row and column from cell
+                    int cellColumnIndex = cell.ColumnIndex;
+                    int cellRowIndex = cell.RowIndex;
+                    //if row and column are the same, it is self ref
+                    if (columnIndex == cellColumnIndex && rowIndex == cellRowIndex)
+                    {
+                        continue;
+                    }
+                    //get cell from row and column
+                    Cell Refcell = GetCell(rowIndex, columnIndex);
+                    if (Refcell.Value == "!(circular reference)")
+                    {
+                        return true;
+                    }
+                    //check if the cell has circular ref
+                    if (IsSelfRef2(cell, Refcell.Text))
+                    {
+                        return true;
+                    }
+                }
+
+            }
+            return false;
+
+
         }
 
 

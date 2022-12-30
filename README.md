@@ -3,10 +3,23 @@ I imported this project from my gitlab account
 
 Solution in SpreadSheet_Joshua_Long
 
+This project was developed using a modular approach, where the project is divided into smaller, distinct parts or modules that can be developed and tested independently, with each module building upon the functionality of the previous ones.
+
 1)In the first stage, you will create the basic parts of a spreadsheet application, including a user interface that allows the user to enter and edit cell values. This assignment lays the foundation for the rest of the project.
 
 2)In the second stage, you will create an ExpressionTree class in a separate logic engine DLL that can parse and evaluate arithmetic expressions. The ExpressionTree class will have various methods to support this functionality. A standalone console application will be used to demo the functionality of the ExpressionTree class.
 
+3)In the third stage, you will complete the implementation of the arithmetic expression parser in the ExpressionTree class, and integrate the ExpressionTree class into the spreadsheet application from the first stage. The console application from the second stage will still be used to demo the functionality of the ExpressionTree class.
+
+4)In the fourth stage, you will modify the spreadsheet application from the first stage to have additional functionality, such as the ability to reference other cells in formulas and update cell values when referenced cells change.
+
+5)In the fifth stage, you will incorporate the ExpressionTree class into the spreadsheet application to properly evaluate formulas when updating cell values. It will also involve updating cell values when other cells that they reference in formulas are changed.
+
+6)In the sixth stage, you will add an undo and redo system to the spreadsheet application, as well as the ability to choose the background color of a cell. The undo system will support undo and redo actions for changing the cell's text or background color.
+
+7)In the seventh stage, you will add loading and saving capabilities to the spreadsheet application, using an XML format to store the data.
+
+8)In the eighth and final stage, you will add the ability to deal with problematic references in formulas, which may require some refactoring of the existing spreadsheet code.
 
 
 

@@ -1,8 +1,5 @@
-# CptS321-HWs
-Joshua long
-
-11631741
-
+# Excel_SpreadSheet
+I imported this project from my gitlab account
 Solution in SpreadSheet_Joshua_Long
 
 

@@ -3,7 +3,7 @@ I imported this project from my gitlab account
 
 Solution in SpreadSheet_Joshua_Long
 
-This project was developed using a modular approach, where the project is divided into smaller, distinct parts or modules that can be developed and tested independently, with each module building upon the functionality of the previous ones.
+This project was developed using a modular approach, where the project is divided into smaller, distinct parts or modules that can be developed and tested independently, with each module building upon the functionality of the previous ones. To see each module independently, check the tags HW4 to HW10.
 
 1)In the first stage, you will create the basic parts of a spreadsheet application, including a user interface that allows the user to enter and edit cell values. This assignment lays the foundation for the rest of the project.
 

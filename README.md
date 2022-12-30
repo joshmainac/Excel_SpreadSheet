@@ -3,6 +3,12 @@ I imported this project from my gitlab account
 
 Solution in SpreadSheet_Joshua_Long
 
+1)In the first stage, you will create the basic parts of a spreadsheet application, including a user interface that allows the user to enter and edit cell values. This assignment lays the foundation for the rest of the project.
+
+2)In the second stage, you will create an ExpressionTree class in a separate logic engine DLL that can parse and evaluate arithmetic expressions. The ExpressionTree class will have various methods to support this functionality. A standalone console application will be used to demo the functionality of the ExpressionTree class.
+
+
+
 
 
 
